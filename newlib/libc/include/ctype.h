@@ -35,6 +35,7 @@ SUCH DAMAGE.
 #define _CTYPE_H_
 
 #include <sys/cdefs.h>
+#include <machine/ctype.h>
 
 #if __POSIX_VISIBLE >= 200809 || __MISC_VISIBLE
 #include <sys/_locale.h>
@@ -256,7 +257,9 @@ const char *__locale_ctype_ptr (void);
 
 #ifndef __cplusplus
 
+#ifndef __ctype_lookup
 #define __ctype_lookup(__c) (__CTYPE_PTR + 1)[(int) (__c)]
+#endif
 
 #define	isalpha(__c)	(__ctype_lookup(__c)&(__CTYPE_UPPER|__CTYPE_LOWER))
 #define	isupper(__c)	((__ctype_lookup(__c)&(__CTYPE_UPPER|__CTYPE_LOWER))==__CTYPE_UPPER)
@@ -270,10 +273,10 @@ const char *__locale_ctype_ptr (void);
 #define	isgraph(__c)	(__ctype_lookup(__c)&(__CTYPE_PUNCT|__CTYPE_UPPER|__CTYPE_LOWER|__CTYPE_DIGIT))
 #define iscntrl(__c)	(__ctype_lookup(__c)&__CTYPE_CNTRL)
 
-#if __ISO_C_VISIBLE >= 1999 && defined(__declare_extern_inline)
-__declare_extern_inline(int) isblank(int c) {
-    return c == '\t' || __ctype_lookup(c) & __CTYPE_BLANK;
-}
+#if defined(__GNUC__) && __ISO_C_VISIBLE >= 1999
+#define isblank(__c) \
+  __extension__ ({ __typeof__ (__c) __x = (__c);		\
+        (__ctype_lookup(__x) & __CTYPE_BLANK) || (int) (__x) == '\t';})
 #endif
 
 #if __POSIX_VISIBLE >= 200809
@@ -285,7 +288,9 @@ const char *__locale_ctype_ptr_l (locale_t);
 #define __CTYPE_PTR_L(__l) ((void) (__l), _ctype_)
 #endif
 
+#ifndef __ctype_lookup_l
 #define __ctype_lookup_l(__c, __l) ((__CTYPE_PTR_L(__l)+1)[(int)(__c)])
+#endif
 
 #define	isalpha_l(__c,__l)	(__ctype_lookup_l(__c,__l)&(__CTYPE_UPPER|__CTYPE_LOWER))
 #define	isupper_l(__c,__l)	((__ctype_lookup_l(__c,__l)&(__CTYPE_UPPER|__CTYPE_LOWER))==__CTYPE_UPPER)
@@ -299,10 +304,10 @@ const char *__locale_ctype_ptr_l (locale_t);
 #define	isgraph_l(__c,__l)	(__ctype_lookup_l(__c,__l)&(__CTYPE_PUNCT|__CTYPE_UPPER|__CTYPE_LOWER|__CTYPE_DIGIT))
 #define iscntrl_l(__c,__l)	(__ctype_lookup_l(__c,__l)&__CTYPE_CNTRL)
 
-#ifdef __declare_extern_inline
-__declare_extern_inline(int) isblank_l(int c, locale_t l) {
-    return c == '\t' || (__ctype_lookup_l(c, l) & __CTYPE_BLANK);
-}
+#if defined(__GNUC__)
+#define isblank_l(__c, __l) \
+  __extension__ ({ __typeof__ (__c) __x = (__c);		\
+        (__ctype_lookup_l(__x,__l) & __CTYPE_BLANK) || (int) (__x) == '\t';})
 #endif
 
 #endif /* __POSIX_VISIBLE >= 200809 */

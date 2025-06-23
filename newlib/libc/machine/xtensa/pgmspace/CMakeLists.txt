@@ -1,0 +1,21 @@
+#
+# SPDX-License-Identifier: BSD-3-Clause
+#
+picolibc_sources_flags("-fno-builtin"
+  memccpy_P.c
+  memchr_P.c
+  memcmp_P.c
+  memcpy_P.c
+  memmem_P.c
+  printf_P.c
+  snprintf_P.c
+  sprintf_P.c
+  strncasecmp_P.c
+  strncat_P.c
+  strncmp_P.c
+  strncpy_P.c
+  strnlen_P.c
+  strnstr_P.c
+  strstr_P.c
+  vsnprintf_P.c
+  )

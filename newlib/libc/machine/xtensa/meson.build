@@ -34,13 +34,33 @@
 #
 
 srcs_machine = [
-  'memcpy.S',
-  'memset.S',
+  'atexit.c',
+  'bzero.S',
+  'fast_strlen.S',
+  'fast_memcpy.S',
+  'fast_strcpy.S',
+  'fast_strncpy.S',
+  'mempcpy.c',
+  'memccpy.c',
+  'memchr.c',
+  'memcmp.c',
+  'memcpy.c',
+  'memmove.c',
   'setjmp.S',
-  'strcmp.S',
-  'strcpy.S',
-  'strlen.S',
-  'strncpy.S',
+  'strcasecmp.c',
+  'strcat.c',
+  'strcmp.c',
+  'strcpy.c',
+  'strlen.c',
+  'strncasecmp.c',
+  'strncat.c',
+  'strncmp.c',
+  'strncpy.c',
+  'strnlen.c',
+  'strstr.c',
+  'time.S',
+  'wcslen.c',
+  'wcsnlen.c',
 ]
 
 conf_data.set('_XTENSA_HAVE_CONFIG_CORE_ISA_H',
@@ -48,5 +68,7 @@ conf_data.set('_XTENSA_HAVE_CONFIG_CORE_ISA_H',
 	      description: 'Xtensa toolchain includes core-isa.h')
 
 subdir('machine')
+subdir('sys')
+subdir('pgmspace')
 
 src_machine = files(srcs_machine)

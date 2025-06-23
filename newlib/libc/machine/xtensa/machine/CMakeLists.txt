@@ -33,7 +33,10 @@
 # OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 picolibc_headers(machine
+  _types.h
   core-isa.h
-  fenv.h
+  ctype.h
   fenv-fp.h
+  fenv.h
+  stdio.h
   )

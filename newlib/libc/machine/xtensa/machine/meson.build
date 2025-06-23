@@ -33,9 +33,12 @@
 # OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 inc_machine_headers_machine = [
+  '_types.h',
   'core-isa.h',
+  'ctype.h',
+  'fenv-fp.h',
   'fenv.h',
-  'fenv-fp.h'
+  'stdio.h'
 ]
 
 if really_install

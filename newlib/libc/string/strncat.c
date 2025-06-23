@@ -51,11 +51,15 @@ QUICKREF
 	strncat ansi pure
 */
 
+/* esp8266 - prevent fortified macro name replacement from both ssp/string.h & being included in machine file */
+#pragma push_macro("strncat")
 #include <string.h>
+#undef strncat
+#pragma pop_macro("strncat")
+
 #include <limits.h>
 #include "local.h"
 
-#undef strncat
 
 char *
 strncat (char *__restrict s1,
