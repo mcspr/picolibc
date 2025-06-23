@@ -30,6 +30,8 @@
   POSSIBILITY OF SUCH DAMAGE.
 */
 
+/* esp8266 - irom strings & 32bit loads */
+#include "../machine/xtensa/sys/pgmspace.h"
 
 #ifndef CHAR
 
@@ -59,8 +61,8 @@
 
 #endif
 
-static const CHAR pstr_nfinity[] = CQ("nfinity");
-static const CHAR pstr_an[] = CQ("an");
+static const CHAR pstr_nfinity[] PSTR_ATTR = CQ("nfinity");
+static const CHAR pstr_an[] PSTR_ATTR = CQ("an");
 
 #if defined(STRTOD) || defined(STRTOF) || defined(STRTOLD)
 
@@ -103,7 +105,7 @@ static const CHAR pstr_an[] = CQ("an");
 static inline INT scanf_getc(const CHAR *s, int *lenp)
 {
     int l = *lenp;
-    INT c = s[l];
+    INT c = pgm_read_byte (s + l);
     *lenp = l + 1;
     return c;
 }
@@ -269,7 +271,7 @@ conv_flt (FLT_STREAM *stream, FLT_CONTEXT *context, width_t width, void *addr, u
         {
 	    UCHAR c;
 
-	    while ((c = *p++) != 0) {
+	    while ((c = pgm_read_byte (p++)) != 0) {
 		if (CHECK_WIDTH()) {
                     if (!IS_EOF(i = scanf_getc (stream, context))) {
                         if (TOLOWER(i) == (INT) c)

@@ -21,6 +21,8 @@
 #include <string.h>
 #include <stdbool.h>
 
+#include "../machine/xtensa/sys/pgmspace.h"
+
 #define assert(x)
 //#include <assert.h>
 

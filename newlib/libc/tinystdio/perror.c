@@ -40,6 +40,6 @@ perror (const char *msg)
 {
 	int err = errno;
 	if (msg && *msg)
-		fprintf(stderr, "%s: ", msg);
+		fprintf(stderr, PSTR("%s: "), msg);
 	fprintf(stderr, "%s\n", strerror(err));
 }

@@ -41,7 +41,7 @@ fputws(const wchar_t *str, FILE *stream)
 	if ((stream->flags & __SWR) == 0)
 		__funlock_return(stream, EOF);
 
-	while ((c = *str++) != L'\0')
+	while ((c = pgm_read_wchar(str++)) != L'\0')
 		if (putwc_unlocked(c, stream) == WEOF)
                         rv = EOF;
 

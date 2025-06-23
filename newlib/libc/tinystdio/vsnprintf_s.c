@@ -48,14 +48,14 @@ vsnprintf_s(char *__restrict s, rsize_t n, const char *__restrict fmt, va_list a
 
     if (s == NULL) {
         write_null = false;
-        msg = "dest buffer is null";
+        msg = PSTR("dest buffer is null");
         goto handle_error;
     } else if ((n == 0) || (CHECK_RSIZE(n))) {
         write_null = false;
-        msg = "invalid buffer size";
+        msg = PSTR("invalid buffer size");
         goto handle_error;
     } else if (fmt == NULL) {
-        msg = "null format string";
+        msg = PSTR("null format string");
         goto handle_error;
     } else {
         struct __file_str f = FDEV_SETUP_STRING_WRITE(s, FDEV_STRING_WRITE_END(s, n));
@@ -66,13 +66,13 @@ vsnprintf_s(char *__restrict s, rsize_t n, const char *__restrict fmt, va_list a
     }
 
     if (rc < 0) {
-        msg = "output error";
+        msg = PSTR("output error");
         goto handle_error;
     } else if (rc > INT_MAX) {
-        msg = "output size exceeds max limit";
+        msg = PSTR("output size exceeds max limit");
         goto handle_error;
     } else if ((unsigned int)rc >= n) {
-        msg = "dest buffer overflow";
+        msg = PSTR("dest buffer overflow");
         goto handle_error;
     } else {
         s[rc] = '\0';

@@ -56,7 +56,7 @@
 #error __LDBL_MAX_10_EXP__ too small
 #endif
 
-static const long double pwr_p10 [NPOW_10] = {
+static const long double pwr_p10 [NPOW_10] PROGMEM = {
     1e+1L, 1e+2L, 1e+4L, 1e+8L, 1e+16L, 1e+32L,
 #if NPOW_10 >= 7
     1e+64L,
@@ -81,7 +81,7 @@ static const long double pwr_p10 [NPOW_10] = {
 #endif
 };
 
-static const long double pwr_m10 [NPOW_10] = {
+static const long double pwr_m10 [NPOW_10] PROGMEM = {
     1e-1L, 1e-2L, 1e-4L, 1e-8L, 1e-16L, 1e-32L,
 #if NPOW_10 >= 7
     1e-64L,

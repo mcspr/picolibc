@@ -73,7 +73,7 @@ strtof (const CHAR * nptr, CHAR ** endptr)
     float flt;
     UCHAR ret;
 
-    while (ISSPACE(nptr[len]))
+    while (ISSPACE(pgm_read_byte(nptr + len)))
         len++;
 
     ret = conv_flt(nptr, &len, INT_MAX, &flt, 0);

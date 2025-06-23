@@ -44,7 +44,7 @@ fputs(const char *str, FILE *stream)
 
         put = stream->put;
 
-	while ((c = *str++) != '\0')
+	while ((c = pgm_read_byte(str++)) != '\0')
                 if (put(c, stream) < 0) {
                         stream->flags |= __SERR;
 			goto fail;

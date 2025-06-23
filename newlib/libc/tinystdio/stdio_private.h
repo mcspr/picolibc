@@ -49,6 +49,9 @@
 #include <stdio-bufio.h>
 #include <sys/lock.h>
 
+/* esp8266 - fmt and %s can be an addr that only allows 32bit loads */
+#include "../machine/xtensa/sys/pgmspace.h"
+
 struct __file_str {
 	struct __file file;	/* main file struct */
         char	*pos;		/* current buffer position */

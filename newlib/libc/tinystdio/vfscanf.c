@@ -344,7 +344,7 @@ conv_brk (FILE *stream, scanf_context_t *context, width_t width, void *addr, con
     bool        fany = false;
 
     (void) flags;
-    if (*_fmt == '^') {
+    if (pgm_read_byte (_fmt) == '^') {
         fnegate = true;
         _fmt++;
     }
@@ -373,7 +373,7 @@ conv_brk (FILE *stream, scanf_context_t *context, width_t width, void *addr, con
              * characters, which makes sense, but appears to violate the
              * spec.
              */
-            f = *fmt++;
+            f = pgm_read_byte (fmt++);
             if (!f)
                 return NULL;
             if (fmt != _fmt + 1) {
@@ -609,13 +609,13 @@ int vfscanf (FILE * stream, const CHAR *fmt, va_list ap_orig)
     /* Initialization of stream_flags at each pass simplifies the register
        allocation with GCC 3.3 - 4.2.  Only the GCC 4.3 is good to move it
        to the begin.	*/
-    while ((c = *fmt++) != 0) {
+    while ((c = pgm_read_byte (fmt++)) != 0) {
 
 	if (ISSPACE (c)) {
 	    skip_spaces (stream, &context);
 
 	} else if (c != '%'
-		   || (c = *fmt++) == '%')
+		   || (c = pgm_read_byte (fmt++)) == '%')
 	{
 	    /* Ordinary character.	*/
 	    if (IS_EOF(i = scanf_getc (stream, &context)))
@@ -630,7 +630,7 @@ int vfscanf (FILE * stream, const CHAR *fmt, va_list ap_orig)
 
 	    if (c == '*') {
 		flags = FL_STAR;
-		c = *fmt++;
+		c = pgm_read_byte (fmt++);
 	    }
 
             for (;;) {
@@ -638,7 +638,7 @@ int vfscanf (FILE * stream, const CHAR *fmt, va_list ap_orig)
                 while ((c -= '0') < 10) {
                     flags |= FL_WIDTH;
                     width = width * 10 + c;
-                    c = *fmt++;
+                    c = pgm_read_byte (fmt++);
                 }
                 c += '0';
                 if (flags & FL_WIDTH) {
@@ -648,7 +648,7 @@ int vfscanf (FILE * stream, const CHAR *fmt, va_list ap_orig)
                         va_end(ap);
                         va_copy(ap, ap_orig);
                         skip_to_arg(&my_ap, width);
-                        c = *fmt++;
+                        c = pgm_read_byte (fmt++);
                         continue;
                     }
 #endif
@@ -664,23 +664,23 @@ int vfscanf (FILE * stream, const CHAR *fmt, va_list ap_orig)
 	    switch (c) {
 	      case 'h':
                 flags |= FL_SHORT;
-		c = *fmt++;
+		c = pgm_read_byte (fmt++);
                 if (c == 'h') {
                     flags |= FL_CHAR;
-                    c = *fmt++;
+                    c = pgm_read_byte (fmt++);
                 }
 		break;
 	      case 'l':
 		flags |= FL_LONG;
-		c = *fmt++;
+		c = pgm_read_byte (fmt++);
                 if (c == 'l') {
                     flags |= FL_LONGLONG;
-                    c = *fmt++;
+                    c = pgm_read_byte (fmt++);
                 }
 		break;
               case 'L':
                 flags |= FL_LONG|FL_LONGLONG;
-                c = *fmt++;
+                c = pgm_read_byte (fmt++);
                 break;
 #ifdef _NEED_IO_C99_FORMATS
 #ifdef _NEED_IO_LONG_LONG
@@ -700,7 +700,7 @@ int vfscanf (FILE * stream, const CHAR *fmt, va_list ap_orig)
 			flags |= FL_SHORT;                      \
                     CHECK_LONGLONG(type);                       \
 		}						\
-		c = *fmt++;					\
+		c = pgm_read_byte (fmt++);					\
 		break;
 
 	    CHECK_INT_SIZE('j', intmax_t);
@@ -726,7 +726,7 @@ int vfscanf (FILE * stream, const CHAR *fmt, va_list ap_orig)
 # define CNV_FLOAT	""
 #endif
 #define CNV_LIST	CNV_BASE CNV_BRACKET CNV_FLOAT
-	    if (!c || !strchr (CNV_LIST, c))
+	    if (!c || !strchr (PSTR(CNV_LIST), c))
 		break;
 
 	    addr = (flags & FL_STAR) ? 0 : va_arg (ap, void *);

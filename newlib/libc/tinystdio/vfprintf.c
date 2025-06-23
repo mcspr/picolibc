@@ -348,10 +348,10 @@ skip_to_arg(const CHAR *fmt_orig, my_va_list *ap, int target_argno)
 
     while (current_argno < target_argno) {
         for (;;) {
-            c = *fmt++;
+            c = pgm_read_byte (fmt++);
             if (!c) return;
             if (c == '%') {
-                c = *fmt++;
+                c = pgm_read_byte (fmt++);
                 if (c != '%') break;
             }
         }
@@ -421,7 +421,7 @@ skip_to_arg(const CHAR *fmt_orig, my_va_list *ap, int target_argno)
             CHECK_INT_SIZES(c, flags);
 
 	    break;
-	} while ( (c = *fmt++) != 0);
+	} while ( (c = pgm_read_byte (fmt++)) != 0);
         if (argno == 0)
             break;
         if (argno == current_argno) {
@@ -461,7 +461,7 @@ _mbslen(const wchar_t *s, size_t maxlen)
     wchar_t c;
     char tmp[MB_LEN_MAX];
     size_t len = 0;
-    while (len < maxlen && (c = *s++) != L'\0') {
+    while (len < maxlen && (c = pgm_read_wchar (s++)) != L'\0') {
         int clen;
         clen = __WCTOMB (tmp, c, &ps);
         if (clen == -1)
@@ -484,7 +484,7 @@ _wcslen(const char *s, size_t maxlen)
     mbstate_t ps = {0};
     wchar_t c;
     size_t len = 0;
-    while (len < maxlen && *s != '\0') {
+    while (len < maxlen && pgm_read_wchar (s) != '\0') {
         size_t clen = mbrtowc(&c, s, MB_LEN_MAX, &ps);
         if (c == L'\0')
             break;
@@ -543,10 +543,10 @@ int vfprintf (FILE * stream, const CHAR *fmt, va_list ap_orig)
     const char *msg = "";
 
     if (stream == NULL) {
-        msg = "output stream is null";
+        msg = PSTR("output stream is null");
         goto handle_error;
     } else if (fmt == NULL) {
-        msg = "null format string";
+        msg = PSTR("null format string");
         goto handle_error;
     }
 #endif
@@ -572,10 +572,10 @@ int vfprintf (FILE * stream, const CHAR *fmt, va_list ap_orig)
     for (;;) {
 
 	for (;;) {
-	    c = *fmt++;
+	    c = pgm_read_byte (fmt++);
 	    if (!c) goto ret;
 	    if (c == '%') {
-		c = *fmt++;
+		c = pgm_read_byte (fmt++);
 		if (c != '%') break;
 	    }
 	    my_putc (c, stream);
@@ -694,7 +694,7 @@ int vfprintf (FILE * stream, const CHAR *fmt, va_list ap_orig)
             CHECK_INT_SIZES(c, flags);
 
 	    break;
-	} while ( (c = *fmt++) != 0);
+	} while ( (c = pgm_read_byte (fmt++)) != 0);
 
 #ifdef _NEED_IO_POS_ARGS
         /* Set arg pointers for positional args */
@@ -879,10 +879,10 @@ int vfprintf (FILE * stream, const CHAR *fmt, va_list ap_orig)
 		}
 		if (sign)
 		    my_putc (sign, stream);
-		pnt = "inf";
+		pnt = PSTR("inf");
 		if (dtoa.flags & DTOA_NAN)
-		    pnt = "nan";
-		while ( (c = *pnt++) )
+		    pnt = PSTR("nan");
+		while ( (c = pgm_read_byte (pnt++)) )
 		    my_putc (TOCASE(c), stream);
 	    }
             else
@@ -1076,7 +1076,7 @@ int vfprintf (FILE * stream, const CHAR *fmt, va_list ap_orig)
 	    }
 #else		/* to: IO_VARIANT_IS_FLOAT(PRINTF_VARIANT) */
             SKIP_FLOAT_ARG(flags, ap);
-	    pnt = "*float*";
+	    pnt = PSTR("*float*");
 	    size = sizeof ("*float*") - 1;
 	    goto str_lpad;
 #endif
@@ -1126,14 +1126,14 @@ int vfprintf (FILE * stream, const CHAR *fmt, va_list ap_orig)
                     pnt = va_arg (ap, char *);
                 if (!pnt) {
 #ifdef VFPRINTF_S
-                    msg = "arg corresponding to '%s' is null";
+                    msg = PSTR("arg corresponding to '%s' is null");
                     goto handle_error;
 #endif
-                    pnt = "(null)";
+                    pnt = PSTR("(null)");
                 }
 #ifdef _NEED_IO_SHRINK
                 char c;
-                while ( (c = *pnt++) )
+                while ( (c = pgm_read_byte (pnt++)) )
                     my_putc(c, stream);
 #else
                 size = (flags & FL_PREC) ? (size_t) prec : SIZE_MAX;
@@ -1155,7 +1155,7 @@ int vfprintf (FILE * stream, const CHAR *fmt, va_list ap_orig)
 #ifdef _NEED_IO_WIDETOMB
                     mbstate_t   ps = {0};
                     while(size) {
-                        wchar_t c = *wstr++;
+                        wchar_t c = pgm_read_wchar (wstr++);
                         char *m = u.__mb;
                         int mb_len = __WCTOMB(m, c, &ps);
                         while (size && mb_len) {
@@ -1181,14 +1181,14 @@ int vfprintf (FILE * stream, const CHAR *fmt, va_list ap_orig)
                     }
 #else
                     while (size--)
-                        my_putc (*pnt++, stream);
+                        my_putc (pgm_read_byte (pnt++), stream);
 #endif
                 }
 #endif
 #if defined(__IO_PERCENT_N) || defined(VFPRINTF_S)
             } else if (c == 'n') {
 #ifdef VFPRINTF_S
-                msg = "format string contains percent-n";
+                msg = PSTR("format string contains percent-n");
                 goto handle_error;
 #else
                 if (flags & FL_LONG) {

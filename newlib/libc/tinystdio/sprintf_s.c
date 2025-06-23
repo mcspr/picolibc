@@ -49,11 +49,11 @@ sprintf_s(char *__restrict s, rsize_t bufsize, const char *__restrict fmt, ...)
 
     if (s == NULL) {
         write_null = false;
-        msg = "dest buffer is null";
+        msg = PSTR("dest buffer is null");
         goto handle_error;
     } else if ((bufsize == 0) || (CHECK_RSIZE(bufsize))) {
         write_null = false;
-        msg = "invalid buffer size";
+        msg = PSTR("invalid buffer size");
         goto handle_error;
     } else {
         va_start(args, fmt);
