@@ -9,7 +9,13 @@
 
 static void (*fortify_handler)(int sig);
 
-#define CHK_FAIL_MSG "*** overflow detected ***: terminated"
+#include "../machine/xtensa/sys/pgmspace.h"
+static const char CHK_FAIL_MSG[] PSTR_ATTR =
+    "*** overflow detected ***: terminated"
+#ifndef __TINY_STDIO
+    "\n"
+#endif
+;
 
 __noreturn void
 __chk_fail(void)
@@ -17,8 +23,7 @@ __chk_fail(void)
 #ifdef __TINY_STDIO
   puts(CHK_FAIL_MSG);
 #else
-  static const char msg[] = CHK_FAIL_MSG "\n";
-  write (2, msg, sizeof(msg)-1);
+  write (2, msg, sizeof(CHK_FAIL_MSG)-1);
 #endif
   if (fortify_handler)
       (*fortify_handler)(SIGABRT);

@@ -47,7 +47,13 @@ __stack_chk_init (void)
 
 __noreturn void __stack_chk_fail (void);
 
-#define STACK_CHK_MSG "*** stack smashing detected ***: terminated"
+#include "../machine/xtensa/sys/pgmspace.h"
+static const char STACK_CHK_MSG[] PSTR_ATTR =
+    "*** stack smashing detected ***: terminated"
+#ifndef __TINY_STDIO
+    "\n"
+#endif
+;
 
 __typeof(__stack_chk_fail) __stack_chk_fail_weak;
 
@@ -57,8 +63,7 @@ __stack_chk_fail_weak (void)
 #ifdef __TINY_STDIO
   puts(STACK_CHK_MSG);
 #else
-  static const char msg[] = STACK_CHK_MSG "\n";
-  write (2, msg, sizeof(msg)-1);
+  write (2, msg, sizeof(STACK_CHK_MSG)-1);
 #endif
   abort();
 }
