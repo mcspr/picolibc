@@ -22,8 +22,8 @@
 #ifdef _NEED_FLOAT64
 
 static const __float64
-    one = _F_64(1.0),
-    Zero[] = { _F_64(0.0), _F_64(-0.0) };
+    one PROGMEM = _F_64(1.0),
+    Zero[] PROGMEM = { _F_64(0.0), _F_64(-0.0) };
 
 __float64
 fmod64(__float64 x, __float64 y)

@@ -18,9 +18,9 @@
 /* In the float version, the input parameter x contains 8 bit
    integers, not 24 bit integers.  113 bit precision is not supported.  */
 
-static const int init_jk[] = { 4, 7, 9 }; /* initial value for jk */
+static const int init_jk[] PROGMEM = { 4, 7, 9 }; /* initial value for jk */
 
-static const float PIo2[] = {
+static const float PIo2[] PROGMEM = {
     1.5703125000e+00, /* 0x3fc90000 */
     4.5776367188e-04, /* 0x39f00000 */
     2.5987625122e-05, /* 0x37da0000 */
@@ -34,9 +34,9 @@ static const float PIo2[] = {
     6.3331015649e-25, /* 0x17440000 */
 };
 
-static const float zero = 0.0, one = 1.0,
-                   two8 = 2.5600000000e+02, /* 0x43800000 */
-    twon8 = 3.9062500000e-03; /* 0x3b800000 */
+static const float zero PROGMEM = 0.0, one PROGMEM = 1.0,
+                   two8 PROGMEM = 2.5600000000e+02, /* 0x43800000 */
+    twon8 PROGMEM = 3.9062500000e-03; /* 0x3b800000 */
 
 #ifdef __GNUCLIKE_PRAGMA_DIAGNOSTIC
 #pragma GCC diagnostic ignored "-Wpragmas"

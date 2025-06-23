@@ -72,7 +72,7 @@ C99, POSIX.
   #define QUO_MASK INT_MAX
 #endif
 
-static const __float64 Zero[] = {_F_64(0.0), _F_64(-0.0),};
+static const __float64 Zero[] PROGMEM = {_F_64(0.0), _F_64(-0.0),};
 
 /*
  * Return the IEEE remainder and set *quo to the last n bits of the

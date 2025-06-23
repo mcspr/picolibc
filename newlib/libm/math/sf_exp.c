@@ -22,20 +22,20 @@
 #endif
 
 static const float
-one	= 1.0,
-halF[2]	= {0.5,-0.5,},
-huge	= 1.0e+30,
-twom100 = 7.8886090522e-31,      /* 2**-100=0x0d800000 */
-ln2HI[2]   ={ 6.9313812256e-01,		/* 0x3f317180 */
+one	PROGMEM = 1.0,
+halF[2]	PROGMEM = {0.5,-0.5,},
+huge	PROGMEM = 1.0e+30,
+twom100 PROGMEM = 7.8886090522e-31,      /* 2**-100=0x0d800000 */
+ln2HI[2]   PROGMEM ={ 6.9313812256e-01,		/* 0x3f317180 */
 	     -6.9313812256e-01,},	/* 0xbf317180 */
-ln2LO[2]   ={ 9.0580006145e-06,  	/* 0x3717f7d1 */
+ln2LO[2]   PROGMEM ={ 9.0580006145e-06,  	/* 0x3717f7d1 */
 	     -9.0580006145e-06,},	/* 0xb717f7d1 */
-invln2 =  1.4426950216e+00, 		/* 0x3fb8aa3b */
-P1   =  1.6666667163e-01, /* 0x3e2aaaab */
-P2   = -2.7777778450e-03, /* 0xbb360b61 */
-P3   =  6.6137559770e-05, /* 0x388ab355 */
-P4   = -1.6533901999e-06, /* 0xb5ddea0e */
-P5   =  4.1381369442e-08; /* 0x3331bb4c */
+invln2 PROGMEM =  1.4426950216e+00, 		/* 0x3fb8aa3b */
+P1   PROGMEM =  1.6666667163e-01, /* 0x3e2aaaab */
+P2   PROGMEM = -2.7777778450e-03, /* 0xbb360b61 */
+P3   PROGMEM =  6.6137559770e-05, /* 0x388ab355 */
+P4   PROGMEM = -1.6533901999e-06, /* 0xb5ddea0e */
+P5   PROGMEM =  4.1381369442e-08; /* 0x3331bb4c */
 
 float
 expf(float x) /* default IEEE double exp */

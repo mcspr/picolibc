@@ -17,19 +17,19 @@
 
 static float ponef(float), qonef(float);
 
-static const float one = 1.0,
-                   invsqrtpi = 5.6418961287e-01, /* 0x3f106ebb */
-    tpi = 6.3661974669e-01, /* 0x3f22f983 */
+static const float one PROGMEM = 1.0,
+                   invsqrtpi PROGMEM = 5.6418961287e-01, /* 0x3f106ebb */
+    tpi PROGMEM = 6.3661974669e-01, /* 0x3f22f983 */
     /* R0/S0 on [0,2] */
-    r00 = -6.2500000000e-02, /* 0xbd800000 */
-    r01 = 1.4070566976e-03, /* 0x3ab86cfd */
-    r02 = -1.5995563444e-05, /* 0xb7862e36 */
-    r03 = 4.9672799207e-08, /* 0x335557d2 */
-    s01 = 1.9153760746e-02, /* 0x3c9ce859 */
-    s02 = 1.8594678841e-04, /* 0x3942fab6 */
-    s03 = 1.1771846857e-06, /* 0x359dffc2 */
-    s04 = 5.0463624390e-09, /* 0x31ad6446 */
-    s05 = 1.2354227016e-11; /* 0x2d59567e */
+    r00 PROGMEM = -6.2500000000e-02, /* 0xbd800000 */
+    r01 PROGMEM = 1.4070566976e-03, /* 0x3ab86cfd */
+    r02 PROGMEM = -1.5995563444e-05, /* 0xb7862e36 */
+    r03 PROGMEM = 4.9672799207e-08, /* 0x335557d2 */
+    s01 PROGMEM = 1.9153760746e-02, /* 0x3c9ce859 */
+    s02 PROGMEM = 1.8594678841e-04, /* 0x3942fab6 */
+    s03 PROGMEM = 1.1771846857e-06, /* 0x359dffc2 */
+    s04 PROGMEM = 5.0463624390e-09, /* 0x31ad6446 */
+    s05 PROGMEM = 1.2354227016e-11; /* 0x2d59567e */
 
 static const float zero = 0.0;
 
@@ -89,14 +89,14 @@ j1f(float x)
     return (x * (float)0.5 + r / s);
 }
 
-static const float U0[5] = {
+static const float U0[5] PROGMEM = {
     -1.9605709612e-01, /* 0xbe48c331 */
     5.0443872809e-02, /* 0x3d4e9e3c */
     -1.9125689287e-03, /* 0xbafaaf2a */
     2.3525259166e-05, /* 0x37c5581c */
     -9.1909917899e-08, /* 0xb3c56003 */
 };
-static const float V0[5] = {
+static const float V0[5] PROGMEM = {
     1.9916731864e-02, /* 0x3ca3286a */
     2.0255257550e-04, /* 0x3954644b */
     1.3560879779e-06, /* 0x35b602d4 */
@@ -176,7 +176,7 @@ y1f(float x)
  *	| pone(x)-1-R/S | <= 2  ** ( -60.06)
  */
 
-static const float pr8[6] = {
+static const float pr8[6] PROGMEM = {
     /* for x in [inf, 8]=1/[0,0.125] */
     0.0000000000e+00, /* 0x00000000 */
     1.1718750000e-01, /* 0x3df00000 */
@@ -185,7 +185,7 @@ static const float pr8[6] = {
     3.8747453613e+03, /* 0x45722bed */
     7.9144794922e+03, /* 0x45f753d6 */
 };
-static const float ps8[5] = {
+static const float ps8[5] PROGMEM = {
     1.1420736694e+02, /* 0x42e46a2c */
     3.6509309082e+03, /* 0x45642ee5 */
     3.6956207031e+04, /* 0x47105c35 */
@@ -193,7 +193,7 @@ static const float ps8[5] = {
     3.0804271484e+04, /* 0x46f0a88b */
 };
 
-static const float pr5[6] = {
+static const float pr5[6] PROGMEM = {
     /* for x in [8,4.5454]=1/[0.125,0.22001] */
     1.3199052094e-11, /* 0x2d68333f */
     1.1718749255e-01, /* 0x3defffff */
@@ -202,7 +202,7 @@ static const float pr5[6] = {
     5.1763616943e+02, /* 0x440168b7 */
     5.2871520996e+02, /* 0x44042dc6 */
 };
-static const float ps5[5] = {
+static const float ps5[5] PROGMEM = {
     5.9280597687e+01, /* 0x426d1f55 */
     9.9140142822e+02, /* 0x4477d9b1 */
     5.3532670898e+03, /* 0x45a74a23 */
@@ -210,7 +210,7 @@ static const float ps5[5] = {
     1.5040468750e+03, /* 0x44bc0180 */
 };
 
-static const float pr3[6] = {
+static const float pr3[6] PROGMEM = {
     3.0250391081e-09, /* 0x314fe10d */
     1.1718686670e-01, /* 0x3defffab */
     3.9329774380e+00, /* 0x407bb5e7 */
@@ -218,7 +218,7 @@ static const float pr3[6] = {
     9.1055007935e+01, /* 0x42b61c2a */
     4.8559066772e+01, /* 0x42423c7c */
 };
-static const float ps3[5] = {
+static const float ps3[5] PROGMEM = {
     3.4791309357e+01, /* 0x420b2a4d */
     3.3676245117e+02, /* 0x43a86198 */
     1.0468714600e+03, /* 0x4482dbe3 */
@@ -226,7 +226,7 @@ static const float ps3[5] = {
     1.0378793335e+02, /* 0x42cf936c */
 };
 
-static const float pr2[6] = {
+static const float pr2[6] PROGMEM = {
     /* for x in [2.8570,2]=1/[0.3499,0.5] */
     1.0771083225e-07, /* 0x33e74ea8 */
     1.1717621982e-01, /* 0x3deffa16 */
@@ -235,7 +235,7 @@ static const float pr2[6] = {
     1.7693971634e+01, /* 0x418d8d41 */
     5.0735230446e+00, /* 0x40a25a4d */
 };
-static const float ps2[5] = {
+static const float ps2[5] PROGMEM = {
     2.1436485291e+01, /* 0x41ab7dec */
     1.2529022980e+02, /* 0x42fa9499 */
     2.3227647400e+02, /* 0x436846c7 */
@@ -280,7 +280,7 @@ ponef(float x)
  *	| qone(x)/s -0.375-R/S | <= 2  ** ( -61.13)
  */
 
-static const float qr8[6] = {
+static const float qr8[6] PROGMEM = {
     /* for x in [inf, 8]=1/[0,0.125] */
     0.0000000000e+00, /* 0x00000000 */
     -1.0253906250e-01, /* 0xbdd20000 */
@@ -289,7 +289,7 @@ static const float qr8[6] = {
     -1.1849806641e+04, /* 0xc639273a */
     -4.8438511719e+04, /* 0xc73d3683 */
 };
-static const float qs8[6] = {
+static const float qs8[6] PROGMEM = {
     1.6139537048e+02, /* 0x43216537 */
     7.8253862305e+03, /* 0x45f48b17 */
     1.3387534375e+05, /* 0x4802bcd6 */
@@ -298,7 +298,7 @@ static const float qs8[6] = {
     -2.9449025000e+05, /* 0xc88fcb48 */
 };
 
-static const float qr5[6] = {
+static const float qr5[6] PROGMEM = {
     /* for x in [8,4.5454]=1/[0.125,0.22001] */
     -2.0897993405e-11, /* 0xadb7d219 */
     -1.0253904760e-01, /* 0xbdd1fffe */
@@ -307,7 +307,7 @@ static const float qr5[6] = {
     -1.3731937256e+03, /* 0xc4aba633 */
     -2.6124443359e+03, /* 0xc523471c */
 };
-static const float qs5[6] = {
+static const float qs5[6] PROGMEM = {
     8.1276550293e+01, /* 0x42a28d98 */
     1.9917987061e+03, /* 0x44f8f98f */
     1.7468484375e+04, /* 0x468878f8 */
@@ -316,7 +316,7 @@ static const float qs5[6] = {
     -4.7191835938e+03, /* 0xc5937978 */
 };
 
-static const float qr3[6] = {
+static const float qr3[6] PROGMEM = {
     -5.0783124372e-09, /* 0xb1ae7d4f */
     -1.0253783315e-01, /* 0xbdd1ff5b */
     -4.6101160049e+00, /* 0xc0938612 */
@@ -324,7 +324,7 @@ static const float qr3[6] = {
     -2.2824453735e+02, /* 0xc3643e9a */
     -2.1921012878e+02, /* 0xc35b35cb */
 };
-static const float qs3[6] = {
+static const float qs3[6] PROGMEM = {
     4.7665153503e+01, /* 0x423ea91e */
     6.7386511230e+02, /* 0x4428775e */
     3.3801528320e+03, /* 0x45534272 */
@@ -333,7 +333,7 @@ static const float qs3[6] = {
     -1.3520118713e+02, /* 0xc3073381 */
 };
 
-static const float qr2[6] = {
+static const float qr2[6] PROGMEM = {
     /* for x in [2.8570,2]=1/[0.3499,0.5] */
     -1.7838172539e-07, /* 0xb43f8932 */
     -1.0251704603e-01, /* 0xbdd1f475 */
@@ -342,7 +342,7 @@ static const float qr2[6] = {
     -4.2325313568e+01, /* 0xc2294d1f */
     -2.1371921539e+01, /* 0xc1aaf9b2 */
 };
-static const float qs2[6] = {
+static const float qs2[6] PROGMEM = {
     2.9533363342e+01, /* 0x41ec4454 */
     2.5298155212e+02, /* 0x437cfb47 */
     7.5750280762e+02, /* 0x443d602e */

@@ -23,7 +23,7 @@
   #define QUO_MASK INT_MAX
 #endif
 
-static const float Zero[] = {0.0, -0.0,};
+static const float Zero[] PROGMEM = {0.0, -0.0,};
 
 /*
  * Return the IEEE remainder and set *quo to the last n bits of the

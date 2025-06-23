@@ -16,7 +16,7 @@
 #include "fdlibm.h"
 
 static const float
-TWO23[2]={
+TWO23[2] PROGMEM ={
   8.3886080000e+06, /* 0x4b000000 */
  -8.3886080000e+06, /* 0xcb000000 */
 };

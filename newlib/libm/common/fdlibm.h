@@ -24,6 +24,8 @@
 #include <fenv.h>
 #include "math_config.h"
 
+#include "../../libc/machine/xtensa/sys/pgmspace.h"
+
 /* Most routines need to check whether a float is finite, infinite, or not a
    number, and many need to know whether the result of an operation will
    overflow.  These conditions depend on whether the largest exponent is

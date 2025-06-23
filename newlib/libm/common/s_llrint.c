@@ -31,7 +31,7 @@ static const double
    the fractional part of x, according to the implementation's current rounding
    mode.  2^52 is the smallest double that can be represented using all 52 significant
    digits. */
-TWO52[2]={
+TWO52[2] PROGMEM ={
   _F_64(4.50359962737049600000e+15), /* 0x43300000, 0x00000000 */
  _F_64(-4.50359962737049600000e+15), /* 0xC3300000, 0x00000000 */
 };

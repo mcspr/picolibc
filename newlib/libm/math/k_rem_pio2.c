@@ -132,7 +132,7 @@
 
 static const int init_jk[] = { 2, 3, 4, 6 }; /* initial value for jk */
 
-static const __float64 PIo2[] = {
+static const __float64 PIo2[] PROGMEM = {
     _F_64(1.57079625129699707031e+00), /* 0x3FF921FB, 0x40000000 */
     _F_64(7.54978941586159635335e-08), /* 0x3E74442D, 0x00000000 */
     _F_64(5.39030252995776476554e-15), /* 0x3CF84698, 0x80000000 */
@@ -144,9 +144,9 @@ static const __float64 PIo2[] = {
 };
 
 static const __float64
-    zero = _F_64(0.0), one = _F_64(1.0),
-    two24 = _F_64(1.67772160000000000000e+07), /* 0x41700000, 0x00000000 */
-    twon24 = _F_64(5.96046447753906250000e-08); /* 0x3E700000, 0x00000000 */
+    zero PROGMEM = _F_64(0.0), one PROGMEM = _F_64(1.0),
+    two24 PROGMEM = _F_64(1.67772160000000000000e+07), /* 0x41700000, 0x00000000 */
+    twon24 PROGMEM = _F_64(5.96046447753906250000e-08); /* 0x3E700000, 0x00000000 */
 
 #ifdef __GNUCLIKE_PRAGMA_DIAGNOSTIC
 #pragma GCC diagnostic ignored "-Wpragmas"

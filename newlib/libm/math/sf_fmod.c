@@ -21,7 +21,7 @@
 
 #include "fdlibm.h"
 
-static const float one = 1.0, Zero[] = {
+static const float one PROGMEM = 1.0, Zero[] PROGMEM = {
     0.0,
     -0.0,
 };

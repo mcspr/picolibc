@@ -29,7 +29,7 @@ static const float
    the fractional part of x, according to the implementation's current rounding
    mode.  2^23 is the smallest float that can be represented using all 23 significant
    digits. */
-TWO23[2]={
+TWO23[2] PROGMEM ={
   8.3886080000e+06, /* 0x4b000000 */
  -8.3886080000e+06, /* 0xcb000000 */
 };
