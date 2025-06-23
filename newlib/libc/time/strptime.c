@@ -43,7 +43,7 @@
 #include <limits.h>
 #include "locale_private.h"
 
-static const int _DAYS_BEFORE_MONTH[12] =
+static const int _DAYS_BEFORE_MONTH[12] PROGMEM =
 {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334};
 
 #define SET_MDAY 1
@@ -70,7 +70,7 @@ is_leap_year (int year)
 
 /* Needed for strptime. */
 static int
-match_string (const char *__restrict *buf, const char * const*strs,
+match_string (const char *__restrict *buf,const char * const*strs,
 	      locale_t locale)
 {
     int i = 0;
@@ -158,17 +158,17 @@ strptime_l (const char *buf, const char *format, struct tm *timeptr,
     char c;
     int ymd = 0;
 
-    for (; (c = *format) != '\0'; ++format) {
+    for (; (c = pgm_read_byte(format)) != '\0'; ++format) {
 	char *s;
 	int ret;
 
 	if (isspace_l ((unsigned char) c, locale)) {
-	    while (isspace_l ((unsigned char) *buf, locale))
+	    while (isspace_l ((unsigned char) pgm_read_byte(buf), locale))
 		++buf;
-	} else if (c == '%' && format[1] != '\0') {
-	    c = *++format;
+	} else if (c == '%' && pgm_read_byte(format + 1) != '\0') {
+	    c = pgm_read_byte(++format);
 	    if (c == 'E' || c == 'O')
-		c = *++format;
+		c = pgm_read_byte(++format);
 	    switch (c) {
 	    case 'A' :
 		ret = match_string (&buf, TIME_WEEKDAY, locale);
@@ -208,14 +208,14 @@ strptime_l (const char *buf, const char *format, struct tm *timeptr,
 		ymd |= SET_YEAR;
 		break;
 	    case 'c' :		/* %a %b %e %H:%M:%S %Y */
-		s = strptime_l (buf, TIME_C_FMT, timeptr, locale);
+		s = strptime_l (buf, PSTR(TIME_C_FMT), timeptr, locale);
 		if (s == NULL)
 		    return NULL;
 		buf = s;
 		ymd |= SET_WDAY | SET_YMD;
 		break;
 	    case 'D' :		/* %m/%d/%y */
-		s = strptime_l (buf, "%m/%d/%y", timeptr, locale);
+		s = strptime_l (buf, PSTR("%m/%d/%y"), timeptr, locale);
 		if (s == NULL)
 		    return NULL;
 		buf = s;
@@ -231,7 +231,7 @@ strptime_l (const char *buf, const char *format, struct tm *timeptr,
 		ymd |= SET_MDAY;
 		break;
 	    case 'F' :		/* %Y-%m-%d - GNU extension */
-		s = strptime_l (buf, "%Y-%m-%d", timeptr, locale);
+		s = strptime_l (buf, PSTR("%Y-%m-%d"), timeptr, locale);
 		if (s == NULL || s == buf)
 		    return NULL;
 		buf = s;
@@ -280,7 +280,7 @@ strptime_l (const char *buf, const char *format, struct tm *timeptr,
 		buf = s;
 		break;
 	    case 'n' :
-		if (*buf == '\n')
+		if (pgm_read_byte(buf) == '\n')
 		    ++buf;
 		else
 		    return NULL;
@@ -305,13 +305,13 @@ strptime_l (const char *buf, const char *format, struct tm *timeptr,
 		ymd |= SET_MON;
 		break;
 	    case 'r' :		/* %I:%M:%S %p */
-		s = strptime_l (buf, TIME_AMPM_FMT, timeptr, locale);
+		s = strptime_l (buf, PSTR(TIME_AMPM_FMT), timeptr, locale);
 		if (s == NULL)
 		    return NULL;
 		buf = s;
 		break;
 	    case 'R' :		/* %H:%M */
-		s = strptime_l (buf, "%H:%M", timeptr, locale);
+		s = strptime_l (buf, PSTR("%H:%M"), timeptr, locale);
 		if (s == NULL)
 		    return NULL;
 		buf = s;
@@ -344,13 +344,13 @@ strptime_l (const char *buf, const char *format, struct tm *timeptr,
 		buf = s;
 		break;
 	    case 't' :
-		if (*buf == '\t')
+		if (pgm_read_byte(buf) == '\t')
 		    ++buf;
 		else
 		    return NULL;
 		break;
 	    case 'T' :		/* %H:%M:%S */
-		s = strptime_l (buf, "%H:%M:%S", timeptr, locale);
+		s = strptime_l (buf, PSTR("%H:%M:%S"), timeptr, locale);
 		if (s == NULL)
 		    return NULL;
 		buf = s;
@@ -396,14 +396,14 @@ strptime_l (const char *buf, const char *format, struct tm *timeptr,
 		ymd |= SET_YDAY;
 		break;
 	    case 'x' :
-		s = strptime_l (buf, TIME_X_FMT, timeptr, locale);
+		s = strptime_l (buf, PSTR(TIME_X_FMT), timeptr, locale);
 		if (s == NULL)
 		    return NULL;
 		buf = s;
 		ymd |= SET_YMD;
 		break;
 	    case 'X' :
-		s = strptime_l (buf, TIME_UX_FMT, timeptr, locale);
+		s = strptime_l (buf, PSTR(TIME_UX_FMT), timeptr, locale);
 		if (s == NULL)
 		    return NULL;
 		buf = s;
@@ -434,20 +434,20 @@ strptime_l (const char *buf, const char *format, struct tm *timeptr,
 		--format;
 		__fallthrough;
 	    case '%' :
-		if (*buf == '%')
+		if (pgm_read_byte(buf) == '%')
 		    ++buf;
 		else
 		    return NULL;
 		break;
 	    default :
-		if (*buf == '%' || *++buf == c)
+		if (pgm_read_byte(buf) == '%' || *++buf == c)
 		    ++buf;
 		else
 		    return NULL;
 		break;
 	    }
 	} else {
-	    if (*buf == c)
+	    if (pgm_read_byte(buf) == c)
 		++buf;
 	    else
 		return NULL;

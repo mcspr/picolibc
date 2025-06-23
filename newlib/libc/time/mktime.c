@@ -80,10 +80,9 @@ ANSI C requires <<mktime>>.
 #include <time.h>
 #include "local.h"
 
+#define _DAYS_IN_MONTH(x) ((x == 1) ? days_in_feb : pgm_read_byte(&__month_lengths[0][x]))
 
-#define _DAYS_IN_MONTH(x) ((x == 1) ? days_in_feb : __month_lengths[0][x])
-
-static const int16_t _DAYS_BEFORE_MONTH[12] =
+static const uint16_t _DAYS_BEFORE_MONTH[12] PROGMEM =
 {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334};
 
 #define _DAYS_IN_YEAR(year) (isleap(year+YEAR_BASE) ? 366 : 365)
@@ -197,7 +196,7 @@ mktime_utc (struct tm *tim_p, long *days_p)
 
   /* compute days in year */
   days += tim_p->tm_mday - 1;
-  days += _DAYS_BEFORE_MONTH[tim_p->tm_mon];
+  days += pgm_read_word (&_DAYS_BEFORE_MONTH[tim_p->tm_mon]);
   if (tim_p->tm_mon > 1 && isleap (tim_p->tm_year+YEAR_BASE))
     days++;
 

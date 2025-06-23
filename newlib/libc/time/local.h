@@ -8,6 +8,8 @@
 #include <sys/lock.h>
 #include <stdint.h>
 
+#include "../machine/xtensa/sys/pgmspace.h"
+
 #define SECSPERMIN	60L
 #define MINSPERHOUR	60L
 #define HOURSPERDAY	24L

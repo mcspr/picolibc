@@ -698,14 +698,14 @@ __strftime (CHAR *s, size_t maxsize, const CHAR *format,
 
   for (;;)
     {
-      while (*format && *format != CQ('%'))
+      while (pgm_read_byte(format) && pgm_read_byte(format) != CQ('%'))
 	{
 	  if (count < maxsize - 1)
-	    s[count++] = *format++;
+	    s[count++] = pgm_read_byte(format++);
 	  else
 	    return 0;
 	}
-      if (*format == CQ('\0'))
+      if (pgm_read_byte(format) == CQ('\0'))
 	break;
       format++;
       pad = '\0';
@@ -713,11 +713,11 @@ __strftime (CHAR *s, size_t maxsize, const CHAR *format,
 
       /* POSIX-1.2008 feature: '0' and '+' modifiers require 0-padding with
          slightly different semantics. */
-      if (*format == CQ('0') || *format == CQ('+'))
-	pad = *format++;
+      if (pgm_read_byte(format) == CQ('0') || pgm_read_byte(format) == CQ('+'))
+	pad = pgm_read_byte(format++);
 
       /* POSIX-1.2008 feature: A minimum field width can be specified. */
-      if (*format >= CQ('1') && *format <= CQ('9'))
+      if (pgm_read_byte(format) >= CQ('1') && pgm_read_byte(format) <= CQ('9'))
       	{
 	  CHAR *fp;
 	  width = STRTOUL (format, &fp, 10);
@@ -725,9 +725,9 @@ __strftime (CHAR *s, size_t maxsize, const CHAR *format,
 	}
 
       alt = CQ('\0');
-      if (*format == CQ('E'))
+      if (pgm_read_byte(format) == CQ('E'))
 	{
-	  alt = *format++;
+	  alt = pgm_read_byte(format++);
 #ifdef _WANT_C99_TIME_FORMATS
 #if defined (MAKE_WCSFTIME) && defined (TIME_WERA)
 	  if (!*era_info && *TIME_WERA)
@@ -738,9 +738,9 @@ __strftime (CHAR *s, size_t maxsize, const CHAR *format,
 #endif
 #endif /* _WANT_C99_TIME_FORMATS */
 	}
-      else if (*format == CQ('O'))
+      else if (pgm_read_byte(format) == CQ('O'))
 	{
-	  alt = *format++;
+	  alt = pgm_read_byte(format++);
 #ifdef _WANT_C99_TIME_FORMATS
 #if defined (MAKE_WCSFTIME) && defined (TIME_WALT_DIGITS)
 	  if (!*alt_digits && *TIME_WALT_DIGITS)
@@ -752,14 +752,14 @@ __strftime (CHAR *s, size_t maxsize, const CHAR *format,
 #endif /* _WANT_C99_TIME_FORMATS */
 	}
 
-      switch (*format)
+      switch (pgm_read_byte(format))
 	{
 	case CQ('a'):
 	  _ctloc (TIME_WDAY[tim_p->tm_wday]);
 	  for (i = 0; i < ctloclen; i++)
 	    {
 	      if (count < maxsize - 1)
-		s[count++] = ctloc[i];
+		s[count++] = pgm_read_byte(ctloc + i);
 	      else
 		return 0;
 	    }
@@ -769,7 +769,7 @@ __strftime (CHAR *s, size_t maxsize, const CHAR *format,
 	  for (i = 0; i < ctloclen; i++)
 	    {
 	      if (count < maxsize - 1)
-		s[count++] = ctloc[i];
+		s[count++] = pgm_read_byte(ctloc + i);
 	      else
 		return 0;
 	    }
@@ -780,7 +780,7 @@ __strftime (CHAR *s, size_t maxsize, const CHAR *format,
 	  for (i = 0; i < ctloclen; i++)
 	    {
 	      if (count < maxsize - 1)
-		s[count++] = ctloc[i];
+		s[count++] = pgm_read_byte(ctloc + i);
 	      else
 		return 0;
 	    }
@@ -790,7 +790,7 @@ __strftime (CHAR *s, size_t maxsize, const CHAR *format,
 	  for (i = 0; i < ctloclen; i++)
 	    {
 	      if (count < maxsize - 1)
-		s[count++] = ctloc[i];
+		s[count++] = pgm_read_byte(ctloc + i);
 	      else
 		return 0;
 	    }
@@ -822,7 +822,7 @@ __strftime (CHAR *s, size_t maxsize, const CHAR *format,
 #endif /* _WANT_C99_TIME_FORMATS */
 	    _ctloc (TIME_UX_FMT);
 recurse:
-	  if (*ctloc)
+	  if (pgm_read_byte(ctloc))
 	    {
 	      /* Recurse to avoid need to replicate %Y formation. */
 	      len = __strftime (&s[count], maxsize - count, ctloc, tim_p,
@@ -889,14 +889,14 @@ recurse:
 	    {
 	      if (tim_p->tm_mday < 10)
 	      	{
-		  if (*format == CQ('d'))
+		  if (pgm_read_byte(format) == CQ('d'))
 		    {
 		      if (maxsize - count < 2) return 0;
 		      len = conv_to_alt_digits (&s[count], maxsize - count,
 						0, *alt_digits);
 		      CHECK_LENGTH ();
 		    }
-		  if (*format == CQ('e') || len == 0)
+		  if (pgm_read_byte(format) == CQ('e') || len == 0)
 		    s[count++] = CQ(' ');
 		}
 	      len = conv_to_alt_digits (&s[count], maxsize - count,
@@ -907,7 +907,7 @@ recurse:
 	    }
 #endif /* _WANT_C99_TIME_FORMATS */
 	  len = t_snprintf (&s[count], maxsize - count,
-			  *format == CQ('d') ? CQ("%.2d") : CQ("%2d"),
+			  pgm_read_byte(format) == CQ('d') ? CQ("%.2d") : CQ("%2d"),
 			  tim_p->tm_mday);
 	  CHECK_LENGTH ();
 	  break;
@@ -1028,7 +1028,7 @@ recurse:
 	  __fallthrough;
 	case CQ('k'):	/* newlib extension */
 	  len = t_snprintf (&s[count], maxsize - count,
-			  *format == CQ('k') ? CQ("%2d") : CQ("%.2d"),
+			  pgm_read_byte(format) == CQ('k') ? CQ("%2d") : CQ("%.2d"),
 			  tim_p->tm_hour);
           CHECK_LENGTH ();
 	  break;
@@ -1047,7 +1047,7 @@ recurse:
 					       h12, *alt_digits)))
 #endif /* _WANT_C99_TIME_FORMATS */
 	      len = t_snprintf (&s[count], maxsize - count,
-			      *format == CQ('I') ? CQ("%.2d") : CQ("%2d"), h12);
+			      pgm_read_byte(format) == CQ('I') ? CQ("%.2d") : CQ("%2d"), h12);
 	    CHECK_LENGTH ();
 	  }
 	  break;
@@ -1088,8 +1088,9 @@ recurse:
 	  for (i = 0; i < ctloclen; i++)
 	    {
 	      if (count < maxsize - 1)
-                s[count++] = (*format == CQ('P') ? (CHAR) TOLOWER (ctloc[i])
-						 : ctloc[i]);
+                s[count++] = (pgm_read_byte(format) == CQ('P')
+                        ? (CHAR) TOLOWER (pgm_read_byte(ctloc + i))
+			: pgm_read_byte(ctloc + i));
 	      else
 		return 0;
 	    }
@@ -1438,7 +1439,7 @@ recurse:
 	default:
 	  return 0;
 	}
-      if (*format)
+      if (pgm_read_byte(format))
 	format++;
       else
 	break;

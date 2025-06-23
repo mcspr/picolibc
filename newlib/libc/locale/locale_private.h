@@ -214,11 +214,11 @@ __find_locale(const char *name);
 #define WTHOUSANDS_SEP_L(l)     ((void) (l), THOUSANDS_SEP)
 
 /* LC_TIME data */
-extern const char *const __time_wday[7];
-extern const char *const __time_weekday[7];
-extern const char *const __time_mon[12];
-extern const char *const __time_month[12];
-extern const char *const __time_am_pm[2];
+extern const char *const __time_wday[8];
+extern const char *const __time_weekday[8];
+extern const char *const __time_mon[13];
+extern const char *const __time_month[13];
+extern const char *const __time_am_pm[3];
 extern const wchar_t *const __wtime_wday[7];
 extern const wchar_t *const __wtime_weekday[7];
 extern const wchar_t *const __wtime_mon[12];

@@ -152,7 +152,7 @@ _tzset_unlocked (void)
       ++tzenv;
 
       /* quit if no items, too few or too many chars, or no close quote '>' */
-      if (sscanf (tzenv, "%11[-+0-9A-Za-z]%n", __tzname_std, &n) <= 0
+      if (sscanf (tzenv, PSTR("%11[-+0-9A-Za-z]%n"), __tzname_std, &n) <= 0
 		|| n < TZNAME_MIN || TZNAME_MAX < n || '>' != tzenv[n])
         return;
 
@@ -161,7 +161,7 @@ _tzset_unlocked (void)
   else
     {
       /* allow POSIX unquoted alphabetic tz abbr e.g. MESZ */
-      if (sscanf (tzenv, "%11[A-Za-z]%n", __tzname_std, &n) <= 0
+      if (sscanf (tzenv, PSTR("%11[A-Za-z]%n"), __tzname_std, &n) <= 0
 				|| n < TZNAME_MIN || TZNAME_MAX < n)
         return;
     }
@@ -180,7 +180,7 @@ _tzset_unlocked (void)
   mm = 0;
   ss = 0;
  
-  if (sscanf (tzenv, "%hu%n:%hu%n:%hu%n", &hh, &n, &mm, &n, &ss, &n) < 1)
+  if (sscanf (tzenv, PSTR("%hu%n:%hu%n:%hu%n"), &hh, &n, &mm, &n, &ss, &n) < 1)
     return;
   
   offset0 = sign * (ss + SECSPERMIN * mm + SECSPERHOUR * hh);
@@ -192,7 +192,7 @@ _tzset_unlocked (void)
       ++tzenv;
 
       /* quit if no items, too few or too many chars, or no close quote '>' */
-      if (sscanf (tzenv, "%11[-+0-9A-Za-z]%n", __tzname_dst, &n) <= 0 && tzenv[0] == '>')
+      if (sscanf (tzenv, PSTR("%11[-+0-9A-Za-z]%n"), __tzname_dst, &n) <= 0 && tzenv[0] == '>')
 	{ /* No dst */
           tzname[0] = __tzname_std;
           tzname[1] = tzname[0];
@@ -210,7 +210,7 @@ _tzset_unlocked (void)
   else
     {
       /* allow POSIX unquoted alphabetic tz abbr e.g. MESZ */
-      if (sscanf (tzenv, "%11[A-Za-z]%n", __tzname_dst, &n) <= 0)
+      if (sscanf (tzenv, PSTR("%11[A-Za-z]%n"), __tzname_dst, &n) <= 0)
 	{ /* No dst */
           tzname[0] = __tzname_std;
           tzname[1] = tzname[0];
@@ -241,7 +241,7 @@ _tzset_unlocked (void)
   ss = 0;
   
   n  = 0;
-  if (sscanf (tzenv, "%hu%n:%hu%n:%hu%n", &hh, &n, &mm, &n, &ss, &n) <= 0)
+  if (sscanf (tzenv, PSTR("%hu%n:%hu%n:%hu%n"), &hh, &n, &mm, &n, &ss, &n) <= 0)
     offset1 = offset0 - 3600;
   else
     offset1 = sign * (ss + SECSPERMIN * mm + SECSPERHOUR * hh);
@@ -255,7 +255,7 @@ _tzset_unlocked (void)
 
       if (*tzenv == 'M')
 	{
-	  if (sscanf (tzenv, "M%hu%n.%hu%n.%hu%n", &m, &n, &w, &n, &d, &n) != 3 ||
+	  if (sscanf (tzenv, PSTR("M%hu%n.%hu%n.%hu%n"), &m, &n, &w, &n, &d, &n) != 3 ||
 	      m < 1 || m > 12 || w < 1 || w > 5 || d > 6)
 	    return;
 	  
@@ -315,7 +315,7 @@ _tzset_unlocked (void)
       n = 0;
       
       if (*tzenv == '/')
-	if (sscanf (tzenv, "/%hu%n:%hu%n:%hu%n", &hh, &n, &mm, &n, &ss, &n) <= 0)
+	if (sscanf (tzenv, PSTR("/%hu%n:%hu%n:%hu%n"), &hh, &n, &mm, &n, &ss, &n) <= 0)
 	  {
 	    /* error in time format, restore tz rules to default and return */
 	    tz->__tzrule[0] = default_tzrule;

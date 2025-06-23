@@ -104,9 +104,9 @@ localtime_r (const time_t *__restrict tim_p,
 	res->tm_wday = 0;
       ++res->tm_mday;
       res->tm_hour -= HOURSPERDAY;
-      if (res->tm_mday > ip[res->tm_mon])
+      if (res->tm_mday > pgm_read_byte (ip + res->tm_mon))
 	{
-	  res->tm_mday -= ip[res->tm_mon];
+	  res->tm_mday -= pgm_read_byte (ip + res->tm_mon);
 	  res->tm_mon += 1;
 	  if (res->tm_mon == 12)
 	    {
@@ -133,7 +133,7 @@ localtime_r (const time_t *__restrict tim_p,
 	      res->tm_year -= 1;
 	      res->tm_yday = 364 + isleap(res->tm_year + YEAR_BASE);
 	    }
-	  res->tm_mday = ip[res->tm_mon];
+	  res->tm_mday = pgm_read_byte (ip + res->tm_mon);
 	}
     }
   TZ_UNLOCK;

@@ -51,7 +51,7 @@ __tzcalc_limits (int year)
 	  days = year_days;
 
 	  for (j = 1; j < tz->__tzrule[i].m; ++j)
-	    days += ip[j-1];
+	    days += pgm_read_byte (ip + j-1);
 
 	  m_wday = (EPOCH_WDAY + days) % DAYSPERWEEK;
 
@@ -60,7 +60,7 @@ __tzcalc_limits (int year)
 	    wday_diff += DAYSPERWEEK;
 	  m_day = (tz->__tzrule[i].n - 1) * DAYSPERWEEK + wday_diff;
 
-	  while (m_day >= ip[j-1])
+	  while (m_day >= pgm_read_byte (ip + j-1))
 	    m_day -= DAYSPERWEEK;
 
 	  days += m_day;
