@@ -12,6 +12,7 @@ All rights reserved.
 char *	_gcvt (double , int , char *, char, int);
 
 #include "locale_private.h"
+#include "../machine/xtensa/sys/pgmspace.h"
 
 #ifndef __machine_mbstate_t_defined
 #include <wchar.h>

@@ -56,6 +56,7 @@ permit '=' to be in identifiers.
 #include <stddef.h>
 #include <string.h>
 #include "envlock.h"
+#include "local.h"
 
 extern char **environ;
 
@@ -92,16 +93,22 @@ _findenv (
       return NULL;
     }
 
+  char cv;
   c = name;
-  while (*c && *c != '=')  c++;
+  for (;;) {
+    cv = pgm_read_byte(c);
+    if (!cv || cv == '=')
+      break;
+    c++;
+  }
  
   /* Identifiers may not contain an '=', so cannot match if does */
-  if(*c != '=')
+  if(pgm_read_byte(c) != '=')
     {
     len = c - name;
     for (p = *p_environ; *p; ++p)
       if (!strncmp (*p, name, len))
-        if (*(c = *p + len) == '=')
+        if (pgm_read_byte((c = *p + len)) == '=')
 	{
 	  *offset = p - *p_environ;
 	  ENV_UNLOCK;

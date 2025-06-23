@@ -44,20 +44,20 @@ strncpy_s(char *__restrict s1, rsize_t s1max, const char *__restrict s2, rsize_t
     bool write_null = true;
 
     if (s1 == NULL) {
-        msg = "strncpy_s: dest is NULL";
+        msg = PSTR("strncpy_s: dest is NULL");
         write_null = false;
         goto handle_error;
     } else if ((s1max == 0u) || (CHECK_RSIZE(s1max))) {
-        msg = "strncpy_s: dest buffer size is 0 or exceeds RSIZE_MAX";
+        msg = PSTR("strncpy_s: dest buffer size is 0 or exceeds RSIZE_MAX");
         write_null = false;
         goto handle_error;
     }
 
     else if (s2 == NULL) {
-        msg = "strncpy_s: source is NULL";
+        msg = PSTR("strncpy_s: source is NULL");
         goto handle_error;
     } else if (CHECK_RSIZE(n)) {
-        msg = "strncpy_s: copy count exceeds RSIZE_MAX";
+        msg = PSTR("strncpy_s: copy count exceeds RSIZE_MAX");
         goto handle_error;
     }
 
@@ -93,17 +93,17 @@ strncpy_s(char *__restrict s1, rsize_t s1max, const char *__restrict s2, rsize_t
         while ((written < s1max) && (written < n)) {
             if (check_s1_for_overlap == true) {
                 if (s1cp == overlap_point) {
-                    msg = "strncpy_s: overlapping copy";
+                    msg = PSTR("strncpy_s: overlapping copy");
                     goto handle_error;
                 }
             } else if (s2cp == overlap_point) {
-                msg = "strncpy_s: overlapping copy";
+                msg = PSTR("strncpy_s: overlapping copy");
                 goto handle_error;
             } else {
                 /* Normal case*/
             }
 
-            c = *s2cp;
+            c = pgm_read_byte (s2cp);
             s2cp++;
             *s1cp = c;
             s1cp++;
@@ -117,7 +117,7 @@ strncpy_s(char *__restrict s1, rsize_t s1max, const char *__restrict s2, rsize_t
         if ((c != '\0') && (written == n) && (written < s1max)) {
             // we copied n chars from s2 and there is room for null char in s1
             if ((check_s1_for_overlap == true) && (s1cp == overlap_point)) {
-                msg = "strncpy_s: overlapping copy";
+                msg = PSTR("strncpy_s: overlapping copy");
                 goto handle_error;
             } else {
                 c = '\0';
@@ -126,7 +126,7 @@ strncpy_s(char *__restrict s1, rsize_t s1max, const char *__restrict s2, rsize_t
         }
 
         if (c != '\0') {
-            msg = "strncpy_s: dest buffer size insufficent to copy string";
+            msg = PSTR("strncpy_s: dest buffer size insufficent to copy string");
             goto handle_error;
         }
     }

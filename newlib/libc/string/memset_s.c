@@ -43,22 +43,22 @@ memset_s(void *s, rsize_t smax, int c, rsize_t n)
     const char *msg = "";
 
     if (s == NULL) {
-        msg = "memset_s: dest is NULL";
+        msg = PSTR("memset_s: dest is NULL");
         goto handle_error;
     }
 
     if (CHECK_RSIZE(smax)) {
-        msg = "memset_s: buffer size exceeds RSIZE_MAX";
+        msg = PSTR("memset_s: buffer size exceeds RSIZE_MAX");
         goto handle_error;
     }
 
     if (CHECK_RSIZE(n)) {
-        msg = "memset_s: count exceeds RSIZE_MAX";
+        msg = PSTR("memset_s: count exceeds RSIZE_MAX");
         goto handle_error;
     }
 
     if (n > smax) {
-        msg = "memset_s: count exceeds buffer size";
+        msg = PSTR("memset_s: count exceeds buffer size");
         goto handle_error;
     }
 

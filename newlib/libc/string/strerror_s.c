@@ -46,12 +46,12 @@ strerror_s(char *buf, rsize_t buflen, __errno_t errnum)
     const char *msg = "";
 
     if (buf == NULL) {
-        msg = "strerror_s: dest is NULL";
+        msg = PSTR("strerror_s: dest is NULL");
         goto handle_error;
     }
 
     if ((buflen == 0u) || (CHECK_RSIZE(buflen))) {
-        msg = "strerror_s: dest buffer size is 0 or exceeds RSIZE_MAX";
+        msg = PSTR("strerror_s: dest buffer size is 0 or exceeds RSIZE_MAX");
         goto handle_error;
     }
 
@@ -67,7 +67,7 @@ strerror_s(char *buf, rsize_t buflen, __errno_t errnum)
         buf[(buflen - 1u)] = '\0';
 
         if (buflen > 3u) {
-            (void)strncpy(&buf[(buflen - 4u)], "...", 4u);
+            (void)strncpy(&buf[(buflen - 4u)], PSTR("..."), 4u);
         }
 
         result = ERANGE;

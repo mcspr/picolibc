@@ -45,19 +45,19 @@ strcat_s(char *__restrict s1, rsize_t s1max, const char *__restrict s2)
     bool write_null = true;
 
     if (s1 == NULL) {
-        msg = "strcat_s: dest is NULL";
+        msg = PSTR("strcat_s: dest is NULL");
         write_null = false;
         goto handle_error;
     }
 
     if ((s1max == 0) || (CHECK_RSIZE(s1max))) {
-        msg = "strcat_s: dest buffer size is 0 or exceeds RSIZE_MAX";
+        msg = PSTR("strcat_s: dest buffer size is 0 or exceeds RSIZE_MAX");
         write_null = false;
         goto handle_error;
     }
 
     if (s2 == NULL) {
-        msg = "strcat_s: source is NULL";
+        msg = PSTR("strcat_s: source is NULL");
         goto handle_error;
     }
 
@@ -73,7 +73,7 @@ strcat_s(char *__restrict s1, rsize_t s1max, const char *__restrict s2)
     // compute chars available in s1
     s1_len = strnlen_s(s1, s1max);
     if (s1_len == s1max) {
-        msg = "strcat_s: string 1 length exceeds buffer size";
+        msg = PSTR("strcat_s: string 1 length exceeds buffer size");
         goto handle_error;
     }
 
@@ -89,7 +89,7 @@ strcat_s(char *__restrict s1, rsize_t s1max, const char *__restrict s2)
         check_s1_for_overlap = true;
         // make sure source does not lie within initial dest string.
         if (s2 <= s1cp) {
-            msg = "strcat_s: overlapping copy";
+            msg = PSTR("strcat_s: overlapping copy");
             goto handle_error;
         }
     } else {
@@ -105,15 +105,15 @@ strcat_s(char *__restrict s1, rsize_t s1max, const char *__restrict s2)
     while (written < m) {
         if (check_s1_for_overlap) {
             if (s1cp == overlap_point) {
-                msg = "strcat_s: overlapping copy";
+                msg = PSTR("strcat_s: overlapping copy");
                 goto handle_error;
             }
         } else if (s2cp == overlap_point) {
-            msg = "strcat_s: overlapping copy";
+            msg = PSTR("strcat_s: overlapping copy");
             goto handle_error;
         }
 
-        c = *s2cp++;
+        c = pgm_read_byte (s2cp++);
         *s1cp++ = c;
         written++;
         if (c == '\0') {
@@ -122,7 +122,7 @@ strcat_s(char *__restrict s1, rsize_t s1max, const char *__restrict s2)
     }
 
     if (c != '\0') {
-        msg = "strcat_s: dest buffer size insufficent to append string";
+        msg = PSTR("strcat_s: dest buffer size insufficent to append string");
         goto handle_error;
     }
 

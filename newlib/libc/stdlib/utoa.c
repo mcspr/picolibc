@@ -28,13 +28,14 @@ No supporting OS subroutine calls are required.
 
 #define _DEFAULT_SOURCE
 #include <stdlib.h>
+#include "../machine/xtensa/sys/pgmspace.h"
 
 char *
 __utoa (unsigned value,
         char *str,
         int base)
 {
-  const char digits[] = "0123456789abcdefghijklmnopqrstuvwxyz";
+  static const char digits[] PSTR_ATTR = "0123456789abcdefghijklmnopqrstuvwxyz";
   int i, j;
   unsigned remainder;
   char c;
@@ -51,7 +52,7 @@ __utoa (unsigned value,
   do 
     {
       remainder = value % base;
-      str[i++] = digits[remainder];
+      str[i++] = pgm_read_byte (&digits[remainder]);
       value = value / base;
     } while (value != 0);  
   str[i] = '\0'; 

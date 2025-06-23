@@ -36,6 +36,7 @@
 #define STRING_PRIVATE_H_
 
 #include "../stdlib/local_s.h"
+#include "../machine/xtensa/sys/pgmspace.h"
 
 #define MAX_ERROR_MSG 100
 

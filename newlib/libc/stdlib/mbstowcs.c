@@ -88,7 +88,7 @@ mbstowcs (wchar_t *__restrict pwcs,
   
   if (n != 0) {
     do {
-      if ((*pwcs++ = (wchar_t) *s++) == 0)
+      if ((*pwcs++ = (wchar_t) pgm_read_byte (s++)) == 0)
 	break;
       count++;
     } while (--n != 0);

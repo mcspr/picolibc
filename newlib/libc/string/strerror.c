@@ -411,504 +411,504 @@ _strerror_r (
 	int internal,
 	int *errptr)
 {
-  char *error;
+  const char *error;
 
   switch (errnum)
     {
     case 0:
-      error = "Success";
+      error = PSTR("Success");
       break;
 /* go32 defines EPERM as EACCES */
 #if defined (EPERM) && (!defined (EACCES) || (EPERM != EACCES))
     case EPERM:
-      error = "Not owner";
+      error = PSTR("Not owner");
       break;
 #endif
 #ifdef ENOENT
     case ENOENT:
-      error = "No such file or directory";
+      error = PSTR("No such file or directory");
       break;
 #endif
 #ifdef ESRCH
     case ESRCH:
-      error = "No such process";
+      error = PSTR("No such process");
       break;
 #endif
 #ifdef EINTR
     case EINTR:
-      error = "Interrupted system call";
+      error = PSTR("Interrupted system call");
       break;
 #endif
 #ifdef EIO
     case EIO:
-      error = "I/O error";
+      error = PSTR("I/O error");
       break;
 #endif
 /* go32 defines ENXIO as ENODEV */
 #if defined (ENXIO) && (!defined (ENODEV) || (ENXIO != ENODEV))
     case ENXIO:
-      error = "No such device or address";
+      error = PSTR("No such device or address");
       break;
 #endif
 #ifdef E2BIG
     case E2BIG:
-      error = "Arg list too long";
+      error = PSTR("Arg list too long");
       break;
 #endif
 #ifdef ENOEXEC
     case ENOEXEC:
-      error = "Exec format error";
+      error = PSTR("Exec format error");
       break;
 #endif
 #ifdef EALREADY
     case EALREADY:
-      error = "Socket already connected";
+      error = PSTR("Socket already connected");
       break;
 #endif
 #ifdef EBADF
     case EBADF:
-      error = "Bad file number";
+      error = PSTR("Bad file number");
       break;
 #endif
 #ifdef ECHILD
     case ECHILD:
-      error = "No children";
+      error = PSTR("No children");
       break;
 #endif
 #ifdef EDESTADDRREQ
     case EDESTADDRREQ:
-      error = "Destination address required";
+      error = PSTR("Destination address required");
       break;
 #endif
 #ifdef EAGAIN
     case EAGAIN:
-      error = "No more processes";
+      error = PSTR("No more processes");
       break;
 #endif
 #ifdef ENOMEM
     case ENOMEM:
-      error = "Not enough space";
+      error = PSTR("Not enough space");
       break;
 #endif
 #ifdef EACCES
     case EACCES:
-      error = "Permission denied";
+      error = PSTR("Permission denied");
       break;
 #endif
 #ifdef EFAULT
     case EFAULT:
-      error = "Bad address";
+      error = PSTR("Bad address");
       break;
 #endif
 #ifdef ENOTBLK
     case ENOTBLK:
-      error = "Block device required";
+      error = PSTR("Block device required");
       break;
 #endif
 #ifdef EBUSY
     case EBUSY:
-      error = "Device or resource busy";
+      error = PSTR("Device or resource busy");
       break;
 #endif
 #ifdef EEXIST
     case EEXIST:
-      error = "File exists";
+      error = PSTR("File exists");
       break;
 #endif
 #ifdef EXDEV
     case EXDEV:
-      error = "Cross-device link";
+      error = PSTR("Cross-device link");
       break;
 #endif
 #ifdef ENODEV
     case ENODEV:
-      error = "No such device";
+      error = PSTR("No such device");
       break;
 #endif
 #ifdef ENOTDIR
     case ENOTDIR:
-      error = "Not a directory";
+      error = PSTR("Not a directory");
       break;
 #endif
 #ifdef EHOSTDOWN
     case EHOSTDOWN:
-      error = "Host is down";
+      error = PSTR("Host is down");
       break;
 #endif
 #ifdef EINPROGRESS
     case EINPROGRESS:
-      error = "Connection already in progress";
+      error = PSTR("Connection already in progress");
       break;
 #endif
 #ifdef EISDIR
     case EISDIR:
-      error = "Is a directory";
+      error = PSTR("Is a directory");
       break;
 #endif
 #ifdef EINVAL
     case EINVAL:
-      error = "Invalid argument";
+      error = PSTR("Invalid argument");
       break;
 #endif
 #ifdef ENETDOWN
     case ENETDOWN:
-      error = "Network interface is not configured";
+      error = PSTR("Network interface is not configured");
       break;
 #endif
 #ifdef ENETRESET
     case ENETRESET:
-      error = "Connection aborted by network";
+      error = PSTR("Connection aborted by network");
       break;
 #endif
 #ifdef ENFILE
     case ENFILE:
-      error = "Too many open files in system";
+      error = PSTR("Too many open files in system");
       break;
 #endif
 #ifdef EMFILE
     case EMFILE:
-      error = "File descriptor value too large";
+      error = PSTR("File descriptor value too large");
       break;
 #endif
 #ifdef ENOTTY
     case ENOTTY:
-      error = "Not a character device";
+      error = PSTR("Not a character device");
       break;
 #endif
 #ifdef ETXTBSY
     case ETXTBSY:
-      error = "Text file busy";
+      error = PSTR("Text file busy");
       break;
 #endif
 #ifdef EFBIG
     case EFBIG:
-      error = "File too large";
+      error = PSTR("File too large");
       break;
 #endif
 #ifdef EHOSTUNREACH
     case EHOSTUNREACH:
-      error = "Host is unreachable";
+      error = PSTR("Host is unreachable");
       break;
 #endif
 #ifdef ENOSPC
     case ENOSPC:
-      error = "No space left on device";
+      error = PSTR("No space left on device");
       break;
 #endif
 #ifdef ENOTSUP
     case ENOTSUP:
-      error = "Not supported";
+      error = PSTR("Not supported");
       break;
 #endif
 #ifdef ESPIPE
     case ESPIPE:
-      error = "Illegal seek";
+      error = PSTR("Illegal seek");
       break;
 #endif
 #ifdef EROFS
     case EROFS:
-      error = "Read-only file system";
+      error = PSTR("Read-only file system");
       break;
 #endif
 #ifdef EMLINK
     case EMLINK:
-      error = "Too many links";
+      error = PSTR("Too many links");
       break;
 #endif
 #ifdef EPIPE
     case EPIPE:
-      error = "Broken pipe";
+      error = PSTR("Broken pipe");
       break;
 #endif
 #ifdef EDOM
     case EDOM:
-      error = "Mathematics argument out of domain of function";
+      error = PSTR("Mathematics argument out of domain of function");
       break;
 #endif
 #ifdef ERANGE
     case ERANGE:
-      error = "Result too large";
+      error = PSTR("Result too large");
       break;
 #endif
 #ifdef ENOMSG
     case ENOMSG:
-      error = "No message of desired type";
+      error = PSTR("No message of desired type");
       break;
 #endif
 #ifdef EIDRM
     case EIDRM:
-      error = "Identifier removed";
+      error = PSTR("Identifier removed");
       break;
 #endif
 #ifdef EILSEQ
     case EILSEQ:
-      error = "Illegal byte sequence";
+      error = PSTR("Illegal byte sequence");
       break;
 #endif
 #ifdef EDEADLK
     case EDEADLK:
-      error = "Deadlock";
+      error = PSTR("Deadlock");
       break;
 #endif
 #ifdef ENETUNREACH
     case  ENETUNREACH:
-      error = "Network is unreachable";
+      error = PSTR("Network is unreachable");
       break;
 #endif
 #ifdef ENOLCK
     case ENOLCK:
-      error = "No lock";
+      error = PSTR("No lock");
       break;
 #endif
 #ifdef ENOSTR
     case ENOSTR:
-      error = "Not a stream";
+      error = PSTR("Not a stream");
       break;
 #endif
 #ifdef ETIME
     case ETIME:
-      error = "Stream ioctl timeout";
+      error = PSTR("Stream ioctl timeout");
       break;
 #endif
 #ifdef ENOSR
     case ENOSR:
-      error = "No stream resources";
+      error = PSTR("No stream resources");
       break;
 #endif
 #ifdef ENONET
     case ENONET:
-      error = "Machine is not on the network";
+      error = PSTR("Machine is not on the network");
       break;
 #endif
 #ifdef ENOPKG
     case ENOPKG:
-      error = "No package";
+      error = PSTR("No package");
       break;
 #endif
 #ifdef EREMOTE
     case EREMOTE:
-      error = "Resource is remote";
+      error = PSTR("Resource is remote");
       break;
 #endif
 #ifdef ENOLINK
     case ENOLINK:
-      error = "Virtual circuit is gone";
+      error = PSTR("Virtual circuit is gone");
       break;
 #endif
 #ifdef EADV
     case EADV:
-      error = "Advertise error";
+      error = PSTR("Advertise error");
       break;
 #endif
 #ifdef ESRMNT
     case ESRMNT:
-      error = "Srmount error";
+      error = PSTR("Srmount error");
       break;
 #endif
 #ifdef ECOMM
     case ECOMM:
-      error = "Communication error";
+      error = PSTR("Communication error");
       break;
 #endif
 #ifdef EPROTO
     case EPROTO:
-      error = "Protocol error";
+      error = PSTR("Protocol error");
       break;
 #endif
 #ifdef EPROTONOSUPPORT
     case EPROTONOSUPPORT:
-      error = "Unknown protocol";
+      error = PSTR("Unknown protocol");
       break;
 #endif
 #ifdef EMULTIHOP
     case EMULTIHOP:
-      error = "Multihop attempted";
+      error = PSTR("Multihop attempted");
       break;
 #endif
 #ifdef EBADMSG
     case EBADMSG:
-      error = "Bad message";
+      error = PSTR("Bad message");
       break;
 #endif
 #ifdef ELIBACC
     case ELIBACC:
-      error = "Cannot access a needed shared library";
+      error = PSTR("Cannot access a needed shared library");
       break;
 #endif
 #ifdef ELIBBAD
     case ELIBBAD:
-      error = "Accessing a corrupted shared library";
+      error = PSTR("Accessing a corrupted shared library");
       break;
 #endif
 #ifdef ELIBSCN
     case ELIBSCN:
-      error = ".lib section in a.out corrupted";
+      error = PSTR(".lib section in a.out corrupted");
       break;
 #endif
 #ifdef ELIBMAX
     case ELIBMAX:
-      error = "Attempting to link in more shared libraries than system limit";
+      error = PSTR("Attempting to link in more shared libraries than system limit");
       break;
 #endif
 #ifdef ELIBEXEC
     case ELIBEXEC:
-      error = "Cannot exec a shared library directly";
+      error = PSTR("Cannot exec a shared library directly");
       break;
 #endif
 #ifdef ENOSYS
     case ENOSYS:
-      error = "Function not implemented";
+      error = PSTR("Function not implemented");
       break;
 #endif
 #ifdef ENMFILE
     case ENMFILE:
-      error = "No more files";
+      error = PSTR("No more files");
       break;
 #endif
 #ifdef ENOTEMPTY
     case ENOTEMPTY:
-      error = "Directory not empty";
+      error = PSTR("Directory not empty");
       break;
 #endif
 #ifdef ENAMETOOLONG
     case ENAMETOOLONG:
-      error = "File or path name too long";
+      error = PSTR("File or path name too long");
       break;
 #endif
 #ifdef ELOOP
     case ELOOP:
-      error = "Too many symbolic links";
+      error = PSTR("Too many symbolic links");
       break;
 #endif
 #ifdef ENOBUFS
     case ENOBUFS:
-      error = "No buffer space available";
+      error = PSTR("No buffer space available");
       break;
 #endif
 #ifdef ENODATA
     case ENODATA:
-      error = "No data";
+      error = PSTR("No data");
       break;
 #endif
 #ifdef EAFNOSUPPORT
     case EAFNOSUPPORT:
-      error = "Address family not supported by protocol family";
+      error = PSTR("Address family not supported by protocol family");
       break;
 #endif
 #ifdef EPROTOTYPE
     case EPROTOTYPE:
-      error = "Protocol wrong type for socket";
+      error = PSTR("Protocol wrong type for socket");
       break;
 #endif
 #ifdef ENOTSOCK
     case ENOTSOCK:
-      error = "Socket operation on non-socket";
+      error = PSTR("Socket operation on non-socket");
       break;
 #endif
 #ifdef ENOPROTOOPT
     case ENOPROTOOPT:
-      error = "Protocol not available";
+      error = PSTR("Protocol not available");
       break;
 #endif
 #ifdef ESHUTDOWN
     case ESHUTDOWN:
-      error = "Can't send after socket shutdown";
+      error = PSTR("Can't send after socket shutdown");
       break;
 #endif
 #ifdef ECONNREFUSED
     case ECONNREFUSED:
-      error = "Connection refused";
+      error = PSTR("Connection refused");
       break;
 #endif
 #ifdef ECONNRESET
     case ECONNRESET:
-      error = "Connection reset by peer";
+      error = PSTR("Connection reset by peer");
       break;
 #endif
 #ifdef EADDRINUSE
     case EADDRINUSE:
-      error = "Address already in use";
+      error = PSTR("Address already in use");
       break;
 #endif
 #ifdef EADDRNOTAVAIL
     case EADDRNOTAVAIL:
-      error = "Address not available";
+      error = PSTR("Address not available");
       break;
 #endif
 #ifdef ECONNABORTED
     case ECONNABORTED:
-      error = "Software caused connection abort";
+      error = PSTR("Software caused connection abort");
       break;
 #endif
 #if (defined(EWOULDBLOCK) && (!defined (EAGAIN) || (EWOULDBLOCK != EAGAIN)))
     case EWOULDBLOCK:
-        error = "Operation would block";
+        error = PSTR("Operation would block");
         break;
 #endif
 #ifdef ENOTCONN
     case ENOTCONN:
-        error = "Socket is not connected";
+        error = PSTR("Socket is not connected");
         break;
 #endif
 #ifdef ESOCKTNOSUPPORT
     case ESOCKTNOSUPPORT:
-        error = "Socket type not supported";
+        error = PSTR("Socket type not supported");
         break;
 #endif
 #ifdef EISCONN
     case EISCONN:
-        error = "Socket is already connected";
+        error = PSTR("Socket is already connected");
         break;
 #endif
 #ifdef ECANCELED
     case ECANCELED:
-        error = "Operation canceled";
+        error = PSTR("Operation canceled");
         break;
 #endif
 #ifdef ENOTRECOVERABLE
     case ENOTRECOVERABLE:
-        error = "State not recoverable";
+        error = PSTR("State not recoverable");
         break;
 #endif
 #ifdef EOWNERDEAD
     case EOWNERDEAD:
-        error = "Previous owner died";
+        error = PSTR("Previous owner died");
         break;
 #endif
 #ifdef ESTRPIPE
     case ESTRPIPE:
-	error = "Streams pipe error";
+	error = PSTR("Streams pipe error");
 	break;
 #endif
 #if defined(EOPNOTSUPP) && (!defined(ENOTSUP) || (ENOTSUP != EOPNOTSUPP))
     case EOPNOTSUPP:
-        error = "Operation not supported on socket";
+        error = PSTR("Operation not supported on socket");
         break;
 #endif
 #ifdef EOVERFLOW
     case EOVERFLOW:
-      error = "Value too large for defined data type";
+      error = PSTR("Value too large for defined data type");
       break;
 #endif
 #ifdef EMSGSIZE
     case EMSGSIZE:
-        error = "Message too long";
+        error = PSTR("Message too long");
         break;
 #endif
 #ifdef ETIMEDOUT
     case ETIMEDOUT:
-        error = "Connection timed out";
+        error = PSTR("Connection timed out");
         break;
 #endif
     default:
       if (!errptr)
         errptr = &errno;
       if (&_user_strerror == NULL || (error = _user_strerror (errnum, internal, errptr)) == 0)
-        error = "";
+        error = PSTR("");
       break;
     }
 
-  return error;
+  return (char*)error;
 }
 
 char *

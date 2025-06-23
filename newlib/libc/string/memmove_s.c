@@ -43,27 +43,27 @@ memmove_s(void *s1, rsize_t s1max, const void *s2, rsize_t n)
     const char *msg = "";
 
     if (s1 == NULL) {
-        msg = "memmove_s: dest is NULL";
+        msg = PSTR("memmove_s: dest is NULL");
         goto handle_error;
     }
 
     if (CHECK_RSIZE(s1max)) {
-        msg = "memmove_s: buffer size exceeds RSIZE_MAX";
+        msg = PSTR("memmove_s: buffer size exceeds RSIZE_MAX");
         goto handle_error;
     }
 
     if (s2 == NULL) {
-        msg = "memmove_s: source is NULL";
+        msg = PSTR("memmove_s: source is NULL");
         goto handle_error;
     }
 
     if (CHECK_RSIZE(n)) {
-        msg = "memmove_s: copy count exceeds RSIZE_MAX";
+        msg = PSTR("memmove_s: copy count exceeds RSIZE_MAX");
         goto handle_error;
     }
 
     if (n > s1max) {
-        msg = "memmove_s: copy count exceeds buffer size";
+        msg = PSTR("memmove_s: copy count exceeds buffer size");
         goto handle_error;
     }
 

@@ -33,14 +33,14 @@ __ascii_mbtowc (
   if (n == 0)
     return -2;
 
-  c = *t;
+  c = pgm_read_byte (t);
 
   if (c >= 0x80)
     return -1;
 
   *pwc = (wchar_t)c;
 
-  if (*t == '\0')
+  if (c == 0)
     return 0;
 
   return 1;
@@ -73,7 +73,7 @@ __utf8_mbtowc (
     return -2;
 
   if (state->__count == 0)
-    ch = t[i++];
+    ch = pgm_read_byte (t + i++);
   else
     ch = state->__value.__wchb[0];
 
@@ -103,7 +103,7 @@ __utf8_mbtowc (
 	++n;
       if (n < 2)
 	return -2;
-      ch = t[i++];
+      ch = pgm_read_byte (t + i++);
       if (ch < 0x80 || ch > 0xbf)
         return -1;
       if (state->__value.__wchb[0] < 0xc2)
@@ -127,7 +127,7 @@ __utf8_mbtowc (
 	++n;
       if (n < 2)
 	return -2;
-      ch = (state->__count == 1) ? t[i++] : state->__value.__wchb[1];
+      ch = (state->__count == 1) ? pgm_read_byte (t + i++) : state->__value.__wchb[1];
       if (state->__value.__wchb[0] == 0xe0 && ch < 0xa0)
 	{
 	  /* overlong UTF-8 sequence */
@@ -144,7 +144,7 @@ __utf8_mbtowc (
 	++n;
       if (n < 3)
 	return -2;
-      ch = t[i++];
+      ch = pgm_read_byte (t + i++);
       if (ch < 0x80 || ch > 0xbf)
 	{
 	  return -1;
@@ -172,7 +172,7 @@ __utf8_mbtowc (
 	++n;
       if (n < 2)
 	return -2;
-      ch = (state->__count == 1) ? t[i++] : state->__value.__wchb[1];
+      ch = (state->__count == 1) ? pgm_read_byte (t + i++) : state->__value.__wchb[1];
       if ((state->__value.__wchb[0] == 0xf0 && ch < 0x90)
 	  || (state->__value.__wchb[0] == 0xf4 && ch >= 0x90))
 	{
@@ -190,7 +190,7 @@ __utf8_mbtowc (
 	++n;
       if (n < 3)
 	return -2;
-      ch = (state->__count == 2) ? t[i++] : state->__value.__wchb[2];
+      ch = (state->__count == 2) ? pgm_read_byte (t + i++) : state->__value.__wchb[2];
       if (ch < 0x80 || ch > 0xbf)
 	{
 	  return -1;
@@ -224,7 +224,7 @@ __utf8_mbtowc (
 #endif
       if (n < 4)
 	return -2;
-      ch = t[i++];
+      ch = pgm_read_byte (t + i++);
       if (ch < 0x80 || ch > 0xbf)
 	{
 	  return -1;
@@ -763,7 +763,7 @@ __sjis_mbtowc (
   if (n == 0)
     return -2;
 
-  ch = t[i++];
+  ch = pgm_read_byte (t + i++);
   if (state->__count == 0)
     {
       if (_issjis1 (ch))
@@ -772,7 +772,7 @@ __sjis_mbtowc (
 	  state->__count = 1;
 	  if (n <= 1)
 	    return -2;
-	  ch = t[i++];
+	  ch = pgm_read_byte (t + i++);
 	}
       else if (!_issjis1b(ch))
         {
@@ -834,7 +834,7 @@ __eucjp_mbtowc (
   if (n == 0)
     return -2;
 
-  ch = t[i++];
+  ch = pgm_read_byte (t + i++);
   if (state->__count == 0)
     {
       if (_iseucjp1 (ch))
@@ -843,7 +843,7 @@ __eucjp_mbtowc (
 	  state->__count = 1;
 	  if (n <= 1)
 	    return -2;
-	  ch = t[i++];
+	  ch = pgm_read_byte (t + i++);
 	}
     }
   if (state->__count == 1)
@@ -856,7 +856,7 @@ __eucjp_mbtowc (
 	      state->__count = 2;
 	      if (n <= (size_t) i)
 		return -2;
-	      ch = t[i++];
+	      ch = pgm_read_byte (t + i++);
 	    }
 	  else
 	    {
@@ -945,7 +945,7 @@ __jis_mbtowc (
 
   for (i = 0; i < n; ++i)
     {
-      curr_ch = t[i];
+      curr_ch = pgm_read_byte (t + i);
       switch (curr_ch)
 	{
 	case ESC_CHAR:
@@ -992,11 +992,11 @@ __jis_mbtowc (
 	  *pwc = (wchar_t)*ptr;
 	  return (i + 1);
 	case COPY_J1:
-	  state->__value.__wchb[0] = t[i];
+	  state->__value.__wchb[0] = pgm_read_byte (t + i);
 	  break;
 	case COPY_J2:
 	  state->__state = JIS;
-	  jischar = (((wchar_t)state->__value.__wchb[0]) << 8) + (wchar_t)(t[i]);
+	  jischar = (((wchar_t)state->__value.__wchb[0]) << 8) + (wchar_t)(pgm_read_byte (t + i));
           uchar = __jp2uc(jischar, JP_JIS);
           if (uchar == WEOF)
             {

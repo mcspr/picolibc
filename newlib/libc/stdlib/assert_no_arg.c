@@ -51,9 +51,11 @@ Supporting OS subroutines required (only if enabled): <<close>>, <<fstat>>,
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "../machine/xtensa/sys/pgmspace.h"
+
 void
 __assert_no_args  (void)
 {
-    fprintf(stderr, "assertion failed\n");
+    fprintf(stderr, PSTR("assertion failed\n"));
     abort();
 }

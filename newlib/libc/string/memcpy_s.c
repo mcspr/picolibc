@@ -43,27 +43,27 @@ memcpy_s(void *__restrict s1, rsize_t s1max, const void *__restrict s2, rsize_t 
     const char *msg = "";
 
     if (s1 == NULL) {
-        msg = "memcpy_s: dest is NULL";
+        msg = PSTR("memcpy_s: dest is NULL");
         goto handle_error;
     }
 
     if (CHECK_RSIZE(s1max)) {
-        msg = "memcpy_s: buffer size exceeds RSIZE_MAX";
+        msg = PSTR("memcpy_s: buffer size exceeds RSIZE_MAX");
         goto handle_error;
     }
 
     if (s2 == NULL) {
-        msg = "memcpy_s: source is NULL";
+        msg = PSTR("memcpy_s: source is NULL");
         goto handle_error;
     }
 
     if (CHECK_RSIZE(n)) {
-        msg = "memcpy_s: copy count exceeds RSIZE_MAX";
+        msg = PSTR("memcpy_s: copy count exceeds RSIZE_MAX");
         goto handle_error;
     }
 
     if (n > s1max) {
-        msg = "memcpy_s: copy count exceeds buffer size";
+        msg = PSTR("memcpy_s: copy count exceeds buffer size");
         goto handle_error;
     }
 
@@ -73,7 +73,7 @@ memcpy_s(void *__restrict s1, rsize_t s1max, const void *__restrict s2, rsize_t 
     const char *s2cp_limit = &s2cp[n];
 
     if (((s1cp_limit <= s2cp) || (s2cp_limit <= s1cp)) == false) {
-        msg = "memcpy_s: overlapping copy";
+        msg = PSTR("memcpy_s: overlapping copy");
         goto handle_error;
     }
 

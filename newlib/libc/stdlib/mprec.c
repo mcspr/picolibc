@@ -465,7 +465,7 @@ pow5mult (_Bigint * b, int k)
 {
   _Bigint *b1, *p5, *p51;
   int i;
-  static const int p05[3] = {5, 25, 125};
+  static const int p05[3] PROGMEM = {5, 25, 125};
 
   if ((i = k & 3) != 0)
     b = multadd (b, p05[i - 1], 0);
@@ -1004,7 +1004,7 @@ ratio (_Bigint * a, _Bigint * b)
 
 
 const double
-  tens[] =
+  tens[] PROGMEM =
 {
   1e0, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9,
   1e10, 1e11, 1e12, 1e13, 1e14, 1e15, 1e16, 1e17, 1e18, 1e19,
@@ -1013,16 +1013,16 @@ const double
 };
 
 #if !defined(_DOUBLE_IS_32BITS) && !defined(__v800)
-const double bigtens[] =
+const double bigtens[] PROGMEM =
 {1e16, 1e32, 1e64, 1e128, 1e256};
 
-const double tinytens[] =
+const double tinytens[] PROGMEM =
 {1e-16, 1e-32, 1e-64, 1e-128, 1e-256};
 #else
-const double bigtens[] =
+const double bigtens[] PROGMEM =
 {1e16, 1e32};
 
-const double tinytens[] =
+const double tinytens[] PROGMEM =
 {1e-16, 1e-32};
 #endif
 

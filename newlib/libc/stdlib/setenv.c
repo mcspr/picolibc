@@ -23,6 +23,8 @@
 #include <errno.h>
 #include <envlock.h>
 
+#include "local.h"
+
 /*
  * setenv --
  *	Set the value of the environmental variable "name" to be
@@ -47,7 +49,7 @@ setenv (const char *name,
   int offset;
 
   /* Name cannot be NULL, empty, or contain an equal sign.  */ 
-  if (name == NULL || name[0] == '\0' || strchr(name, '='))
+  if (name == NULL || pgm_read_byte(name) == '\0' || strchr(name, '='))
     {
       errno = EINVAL;
       return -1;
@@ -101,7 +103,7 @@ setenv (const char *name,
       (*p_environ)[cnt + 1] = NULL;
       offset = cnt;
     }
-  for (C = (char *) name; *C && *C != '='; ++C);	/* no `=' in name */
+  for (C = (char *) name; pgm_read_byte(C) && pgm_read_byte(C) != '='; ++C);	/* no `=' in name */
   char *E = malloc ((size_t) ((int) (C - name) + l_value + 2));
   if (!E)
     {
@@ -109,8 +111,8 @@ setenv (const char *name,
       return -1;
     }
   (*p_environ)[offset] = E;
-  for (C = E; (*C = *name++) && *C != '='; ++C);
-  for (*C++ = '='; (*C++ = *value++) != 0;);
+  for (C = E; (*C = pgm_read_byte(name++)) && *C != '='; ++C);
+  for (*C++ = '='; (*C++ = pgm_read_byte(value++)) != 0;);
 
   ENV_UNLOCK;
 
@@ -128,7 +130,7 @@ unsetenv (const char *name)
   int offset;
  
   /* Name cannot be NULL, empty, or contain an equal sign.  */ 
-  if (name == NULL || name[0] == '\0' || strchr(name, '='))
+  if (name == NULL || pgm_read_byte(name) == '\0' || strchr(name, '='))
     {
       errno = EINVAL;
       return -1;

@@ -93,6 +93,8 @@ gpietsch@comcast.net
 
 #ifndef HAVE_GETOPT
 
+#include "../machine/xtensa/sys/pgmspace.h"
+
 /* include files */
 #include <stdio.h>
 #include <stdlib.h>
@@ -329,13 +331,13 @@ getopt_internal (int argc, char *const argv[], const char *shortopts,
 		      if (data->opterr)
 			{
 			  fputs (argv[0], stderr);
-			  fputs (": option `", stderr);
+			  fputs (PSTR(": option `"), stderr);
 			  fputs (argv[data->optind], stderr);
-			  fputs ("' is ambiguous (could be `--", stderr);
+			  fputs (PSTR("' is ambiguous (could be `--"), stderr);
 			  fputs (longopts[longopt_match].name, stderr);
-			  fputs ("' or `--", stderr);
+			  fputs (PSTR("' or `--"), stderr);
 			  fputs (longopts[optindex].name, stderr);
-			  fputs ("')\n", stderr);
+			  fputs (PSTR("')\n"), stderr);
 			}
 		      return (data->optopt = '?');
 		    }
@@ -356,9 +358,9 @@ getopt_internal (int argc, char *const argv[], const char *shortopts,
 	  if (data->opterr)
 	    {
 	      fputs (argv[0], stderr);
-	      fputs (": invalid option -- `-", stderr);
+	      fputs (PSTR(": invalid option -- `-"), stderr);
 	      fputc (argv[data->optind][data->optwhere], stderr);
-	      fputs ("'\n", stderr);
+	      fputs (PSTR("'\n"), stderr);
 	    }
 	  data->optwhere++;
 	  if (argv[data->optind][data->optwhere] == '\0')
@@ -397,7 +399,7 @@ getopt_internal (int argc, char *const argv[], const char *shortopts,
 	  if (data->opterr)
 	    {
 	      fputs (argv[0], stderr);
-	      fputs (": argument required for option `-", stderr);
+	      fputs (PSTR(": argument required for option `-"), stderr);
 	      if (longopt_match >= 0)
 		{
 		  fputc ('-', stderr);
@@ -409,7 +411,7 @@ getopt_internal (int argc, char *const argv[], const char *shortopts,
 		  fputc (*cp, stderr);
 		  data->optopt = *cp;
 		}
-	      fputs ("'\n", stderr);
+	      fputs (PSTR("'\n"), stderr);
 	    }
 	  data->optind++;
 	  return initial_colon ? ':' : '\?';

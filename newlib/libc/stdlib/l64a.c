@@ -24,7 +24,9 @@
 #define _DEFAULT_SOURCE
 #include <stdlib.h>
 
-static const char R64_ARRAY[] = "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+#include "../machine/xtensa/sys/pgmspace.h"
+
+static const char R64_ARRAY[] PSTR_ATTR = "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
 char *
 l64a (long value)
@@ -47,7 +49,7 @@ l64a (long value)
 	}
 
       index = tmp & (64 - 1);
-      *ptr++ = R64_ARRAY[index];
+      *ptr++ = pgm_read_byte(&R64_ARRAY[index]);
       tmp >>= 6;
     }
 

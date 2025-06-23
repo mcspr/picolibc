@@ -59,7 +59,7 @@ wcslen (const wchar_t * s)
   const wchar_t *p;
 
   p = s;
-  while (*p)
+  while (pgm_read_wchar(p))
     p++;
 
   return p - s;
