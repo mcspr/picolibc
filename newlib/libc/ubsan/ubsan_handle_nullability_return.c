@@ -39,5 +39,5 @@ void
 __ubsan_handle_nullability_return(void *_data)
 {
     struct nonnull_return_data *data = _data;
-    __ubsan_error(&data->location, "nullability_return", "\n");
+    __ubsan_error(&data->location, PSTR("nullability_return"), PSTR("\n"));
 }

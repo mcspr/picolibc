@@ -41,6 +41,6 @@ __ubsan_handle_nonnull_return_v1(void *_data,
 {
     struct nonnull_return_data *data = _data;
     struct source_location *location = _location;
-    __ubsan_error(&data->location, "nonnull_return_v1", "source %s:%u\n",
+    __ubsan_error(&data->location, PSTR("nonnull_return_v1"), PSTR("source %s:%u\n"),
                   location->file_name, location->line);
 }

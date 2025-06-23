@@ -35,10 +35,14 @@
 
 #include "ubsan.h"
 
+static const char sbuiltin_check_kind_ctz_passed_zero[] PSTR_ATTR = "ctz_passed_zero";
+static const char sbuiltin_check_kind_clz_passed_zero[] PSTR_ATTR = "clz_passed_zero";
+static const char sbuiltin_check_kind_assume_passed_false[] PSTR_ATTR = "assume_passed_false";
+
 static const char * const builtin_check_kinds[] = {
-    [builtin_check_kind_ctz_passed_zero] = "ctz_passed_zero",
-    [builtin_check_kind_clz_passed_zero] = "clz_passed_zero",
-    [builtin_check_kind_assume_passed_false] = "assume_passed_false",
+    [builtin_check_kind_ctz_passed_zero] = sbuiltin_check_kind_ctz_passed_zero,
+    [builtin_check_kind_clz_passed_zero] = sbuiltin_check_kind_clz_passed_zero,
+    [builtin_check_kind_assume_passed_false] = sbuiltin_check_kind_assume_passed_false,
 };
 
 void
@@ -49,8 +53,8 @@ __ubsan_handle_invalid_builtin(void *_data)
     if (data->kind < sizeof(builtin_check_kinds)/sizeof(builtin_check_kinds[0]))
         kind = builtin_check_kinds[data->kind];
     else
-        kind = "unknown";
+        kind = PSTR("unknown");
 
-    __ubsan_error(&data->location, "invalid_builtin", "%s\n",
+    __ubsan_error(&data->location, PSTR("invalid_builtin"), PSTR("%s\n"),
                   kind);
 }

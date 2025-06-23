@@ -39,5 +39,5 @@ void
 __ubsan_handle_nonnull_return(void *_data)
 {
     struct nonnull_return_data *data = _data;
-    __ubsan_error(&data->location, "nonnull_return", "\n");
+    __ubsan_error(&data->location, PSTR("nonnull_return"), PSTR("\n"));
 }

@@ -40,6 +40,6 @@ __ubsan_handle_vla_bound_not_positive(void *_data,
                                       void *ptr)
 {
     struct vla_bound_data *data = _data;
-    __ubsan_error(&data->location, "vla_bound_not_positive", "(%s) %p\n",
+    __ubsan_error(&data->location, PSTR("vla_bound_not_positive"), PSTR("(%s) %p\n"),
                   data->type->type_name, ptr);
 }

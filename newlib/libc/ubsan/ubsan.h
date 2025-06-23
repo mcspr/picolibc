@@ -41,6 +41,8 @@
 #include <stdbool.h>
 #include <stdarg.h>
 
+#include "../machine/xtensa/sys/pgmspace.h"
+
 enum {
     type_kind_int = 0,
     type_kind_float = 1,

@@ -40,7 +40,7 @@ __ubsan_handle_type_mismatch(void *_data,
                              void *ptr)
 {
     struct type_mismatch_data *data = _data;
-    __ubsan_error(&data->location, "type_mismatch", "(%s) %p %s\n",
+    __ubsan_error(&data->location, PSTR("type_mismatch"), PSTR("(%s) %p %s\n"),
                   data->type->type_name, ptr,
                   __ubsan_type_check_to_string(data->type_check_kind));
 }

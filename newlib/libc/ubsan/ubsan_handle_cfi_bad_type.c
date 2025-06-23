@@ -42,7 +42,7 @@ __ubsan_handle_cfi_bad_type(void *_data,
                             void *opts)
 {
     struct cfi_check_fail_data *data = _data;
-    __ubsan_error(&data->location, "cfi_bad_type", "(%s) %p valid %p opts %p %s\n",
+    __ubsan_error(&data->location, PSTR("cfi_bad_type"), PSTR("(%s) %p valid %p opts %p %s\n"),
                   data->type->type_name,
                   vtable,
                   valid_vtable,

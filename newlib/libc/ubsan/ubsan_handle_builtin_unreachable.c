@@ -39,5 +39,5 @@ void
 __ubsan_handle_builtin_unreachable(void *_data)
 {
     struct unreachable_data *data = _data;
-    __ubsan_error(&data->location, "builtin_unreachable", "\n");
+    __ubsan_error(&data->location, PSTR("builtin_unreachable"), PSTR("\n"));
 }

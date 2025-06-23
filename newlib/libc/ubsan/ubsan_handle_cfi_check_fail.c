@@ -41,7 +41,7 @@ __ubsan_handle_cfi_check_fail(void *_data,
                               void *vtable_is_valid)
 {
     struct cfi_check_fail_data *data = _data;
-    __ubsan_error(&data->location, "cfi_check_fail", "(%s) %p valid %p %s\n",
+    __ubsan_error(&data->location, PSTR("cfi_check_fail"), PSTR("(%s) %p valid %p %s\n"),
                   data->type->type_name,
                   function,
                   vtable_is_valid,

@@ -39,5 +39,5 @@ void
 __ubsan_handle_missing_return(void *_data)
 {
     struct unreachable_data *data = _data;
-    __ubsan_error(&data->location, "missing_return", "\n");
+    __ubsan_error(&data->location, PSTR("missing_return"), PSTR("\n"));
 }

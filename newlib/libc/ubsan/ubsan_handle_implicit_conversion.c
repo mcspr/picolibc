@@ -35,12 +35,18 @@
 
 #include "ubsan.h"
 
+static const char simplicit_conversion_integer_truncation[] PSTR_ATTR = "integer truncation";
+static const char simplicit_conversion_unsigned_integer_truncation[] PSTR_ATTR = "unsigned integer truncation";
+static const char simplicit_conversion_signed_integer_truncation[] PSTR_ATTR = "signed integer truncation";
+static const char simplicit_conversion_integer_sign_change[] PSTR_ATTR = "integer sign change";
+static const char simplicit_conversion_signed_integer_truncation_or_sign_change[] PSTR_ATTR = "signed integer truncation or sign change";
+
 static const char * const implicit_conversion_kinds[] = {
-    [implicit_conversion_integer_truncation] = "integer truncation",
-    [implicit_conversion_unsigned_integer_truncation] = "unsigned integer truncation",
-    [implicit_conversion_signed_integer_truncation] = "signed integer truncation",
-    [implicit_conversion_integer_sign_change] = "integer sign change",
-    [implicit_conversion_signed_integer_truncation_or_sign_change] = "signed integer truncation or sign change",
+    [implicit_conversion_integer_truncation] = simplicit_conversion_integer_truncation,
+    [implicit_conversion_unsigned_integer_truncation] = simplicit_conversion_unsigned_integer_truncation,
+    [implicit_conversion_signed_integer_truncation] = simplicit_conversion_signed_integer_truncation,
+    [implicit_conversion_integer_sign_change] = simplicit_conversion_integer_sign_change,
+    [implicit_conversion_signed_integer_truncation_or_sign_change] = simplicit_conversion_signed_integer_truncation_or_sign_change,
 };
 
 void
@@ -57,8 +63,8 @@ __ubsan_handle_implicit_conversion(void *_data,
     if (data->kind < sizeof(implicit_conversion_kinds) / sizeof(implicit_conversion_kinds[0]))
         kind = implicit_conversion_kinds[data->kind];
     else
-        kind = "unknown conversion kind";
-    __ubsan_error(&data->location, "implicit_conversion", "%s: (%s) %s -> (%s) %s\n",
+        kind = PSTR("unknown conversion kind");
+    __ubsan_error(&data->location, PSTR("implicit_conversion"), PSTR("%s: (%s) %s -> (%s) %s\n"),
                   kind,
                   data->from_type->type_name, src_str,
                   data->to_type->type_name, dst_str);

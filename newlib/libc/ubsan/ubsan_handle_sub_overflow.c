@@ -45,6 +45,6 @@ __ubsan_handle_sub_overflow(void *_data,
     char rhs_str[VAL_STR_LEN];
     __ubsan_val_to_string(lhs_str, data->type, lhs);
     __ubsan_val_to_string(rhs_str, data->type, rhs);
-    __ubsan_error(&data->location, "sub_overflow", "%s - %s\n", lhs_str, rhs_str);
+    __ubsan_error(&data->location, PSTR("sub_overflow"), PSTR("%s - %s\n"), lhs_str, rhs_str);
 }
 

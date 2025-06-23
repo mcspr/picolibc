@@ -35,14 +35,22 @@
 
 #include "ubsan.h"
 
-static const char *const cfi_type_check_kinds[] = {
-    [cfi_type_check_v_call] = "cfi_type_check_v_call",
-    [cfi_type_check_nv_call] = "cfi_type_check_nv_call",
-    [cfi_type_check_derived_cast] = "cfi_type_check_derived_cast",
-    [cfi_type_check_unrelated_cast] = "cfi_type_check_unrelated_cast",
-    [cfi_type_check_i_call] = "cfi_type_check_i_call",
-    [cfi_type_check_nvmf_call] = "cfi_type_check_nvmf_call",
-    [cfi_type_check_vmf_call] = "cfi_type_check_vmf_call",
+static const char scfi_type_check_v_call[] PSTR_ATTR = "cfi_type_check_v_call";
+static const char scfi_type_check_nv_call[] PSTR_ATTR = "cfi_type_check_nv_call";
+static const char scfi_type_check_derived_cast[] PSTR_ATTR = "cfi_type_check_derived_cast";
+static const char scfi_type_check_unrelated_cast[] PSTR_ATTR = "cfi_type_check_unrelated_cast";
+static const char scfi_type_check_i_call[] PSTR_ATTR = "cfi_type_check_i_call";
+static const char scfi_type_check_nvmf_call[] PSTR_ATTR = "cfi_type_check_nvmf_call";
+static const char scfi_type_check_vmf_call[] PSTR_ATTR = "cfi_type_check_vmf_call";
+
+static const char *const cfi_type_check_kinds[] PROGMEM = {
+    [cfi_type_check_v_call] = scfi_type_check_v_call,
+    [cfi_type_check_nv_call] = scfi_type_check_nv_call,
+    [cfi_type_check_derived_cast] = scfi_type_check_derived_cast,
+    [cfi_type_check_unrelated_cast] = scfi_type_check_unrelated_cast,
+    [cfi_type_check_i_call] = scfi_type_check_i_call,
+    [cfi_type_check_nvmf_call] = scfi_type_check_nvmf_call,
+    [cfi_type_check_vmf_call] = scfi_type_check_vmf_call,
 };
 
 const char*
@@ -50,5 +58,5 @@ __ubsan_cfi_type_check_to_string(unsigned char cfi_type_check_kind)
 {
     if (cfi_type_check_kind < sizeof(cfi_type_check_kinds)/sizeof(cfi_type_check_kinds[0]))
         return cfi_type_check_kinds[cfi_type_check_kind];
-    return "unknown";
+    return PSTR("unknown");
 }

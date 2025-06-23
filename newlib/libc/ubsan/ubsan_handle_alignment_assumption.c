@@ -42,7 +42,7 @@ __ubsan_handle_alignment_assumption(void *_data,
                                     void *offset)
 {
     struct alignment_assumption_data *data = _data;
-    __ubsan_error(&data->location, "alignment_assumption", "(%s) %p align %p offset %p\n",
+    __ubsan_error(&data->location, PSTR("alignment_assumption"), PSTR("(%s) %p align %p offset %p\n"),
                   data->type->type_name, ptr, align, offset);
 
 }

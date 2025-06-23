@@ -47,29 +47,29 @@ __ubsan_val_to_string(char str[static VAL_STR_LEN],
     case type_kind_int:
         width = type_int_width(type);
         if (type_is_signed(type)) {
-            snprintf(str, VAL_STR_LEN, "%" PRIdMAX "(s%d)",
+            snprintf(str, VAL_STR_LEN, PSTR("%lld(s%d)"),
                      __ubsan_val_to_imax(type, value, 0), width);
         } else {
-            snprintf(str, VAL_STR_LEN, "%" PRIuMAX "(u%d)",
+            snprintf(str, VAL_STR_LEN, PSTR("%llu(u%d)"),
                      __ubsan_val_to_umax(type, value, 0), width);
         }
         break;
     case type_kind_float:
         width = type_float_width(type);
         if (width == sizeof(float) * 8) {
-            snprintf(str, VAL_STR_LEN, "%af", (double) *(float *) value);
+            snprintf(str, VAL_STR_LEN, PSTR("%af"), (double) *(float *) value);
         } else if (width == sizeof(double) * 8) {
-            snprintf(str, VAL_STR_LEN, "%a", *(double *) value);
+            snprintf(str, VAL_STR_LEN, PSTR("%a"), *(double *) value);
 #ifdef __SIZEOF_LONG_DOUBLE__
         } else if (width == sizeof(long double) * 8) {
-            snprintf(str, VAL_STR_LEN, "%Lal", *(long double *) value);
+            snprintf(str, VAL_STR_LEN, PSTR("%Lal"), *(long double *) value);
 #endif
         } else {
-            snprintf(str, VAL_STR_LEN, "float %d bits", width);
+            snprintf(str, VAL_STR_LEN, PSTR("float %d bits"), width);
         }
         break;
     default:
-        snprintf(str, VAL_STR_LEN, "kind %d\n", type->type_kind);
+        snprintf(str, VAL_STR_LEN, PSTR("kind %d\n"), type->type_kind);
         break;
     }
 }

@@ -46,7 +46,7 @@ __ubsan_error(struct source_location *source,
 {
     va_list ap;
     va_start(ap, fmt);
-    __ubsan_message(source, "ERROR", fail, fmt, ap);
+    __ubsan_message(source, PSTR("ERROR"), fail, fmt, ap);
     va_end(ap);
     abort();
 }

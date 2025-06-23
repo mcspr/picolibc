@@ -42,6 +42,6 @@ __ubsan_handle_load_invalid_value(void *_data,
     struct invalid_value_data *data = _data;
     char val_str[VAL_STR_LEN];
     __ubsan_val_to_string(val_str, data->type, val);
-    __ubsan_error(&data->location, "load_invalid_value", "(%s) %s\n", data->type->type_name, val_str);
+    __ubsan_error(&data->location, PSTR("load_invalid_value"), PSTR("(%s) %s\n"), data->type->type_name, val_str);
 }
 

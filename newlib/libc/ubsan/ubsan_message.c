@@ -46,7 +46,7 @@ __ubsan_message(struct source_location *source,
                 const char *fmt,
                 va_list ap)
 {
-    fprintf(stderr, "UBSAN: %s %s %s:%u ", msg,
+    fprintf(stderr, PSTR("UBSAN: %s %s %s:%u "), msg,
             fail, source->file_name, source->line);
     vfprintf(stderr, fmt, ap);
 }

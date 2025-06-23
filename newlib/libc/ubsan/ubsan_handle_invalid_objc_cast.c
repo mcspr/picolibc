@@ -40,6 +40,6 @@ __ubsan_handle_invalid_objc_cast(void *_data,
                                 void *src)
 {
     struct invalid_objc_cast_data *data = _data;
-    __ubsan_error(&data->location, "invalid_objc_cast", "(%s) %p\n",
+    __ubsan_error(&data->location, PSTR("invalid_objc_cast"), PSTR("(%s) %p\n"),
                   data->expected_type->type_name, src);
 }
