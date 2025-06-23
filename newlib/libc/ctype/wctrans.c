@@ -75,9 +75,9 @@ No supporting OS subroutines are required.
 wctrans_t
 wctrans (const char *c)
 {
-  if (!strcmp (c, "tolower"))
+  if (!strcmp (c, PSTR("tolower")))
     return WCT_TOLOWER;
-  else if (!strcmp (c, "toupper"))
+  else if (!strcmp (c, PSTR("toupper")))
     return WCT_TOUPPER;
   else
     {

@@ -13,6 +13,6 @@ isblank_l (int c, locale_t locale)
     (void) locale;
     return isblank(c);
 #else
-    return (__CTYPE_PTR_L (locale)[c+1] & __CTYPE_BLANK) || (c == '\t');
+    return (pgm_read_byte (&(__CTYPE_PTR_L (locale)[c+1])) & __CTYPE_BLANK) || (c == '\t');
 #endif
 }

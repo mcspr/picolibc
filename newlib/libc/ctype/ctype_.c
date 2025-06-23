@@ -34,7 +34,7 @@
 #include "locale_private.h"
 #include "../stdlib/local.h"
 
-const char _ctype_b[128 + 256] = {
+const char _ctype_b[128 + 256] PROGMEM = {
 	_CTYPE_DATA_128_255,
 	_CTYPE_DATA_0_127,
 	_CTYPE_DATA_128_255
@@ -52,7 +52,7 @@ const char _ctype_b[128 + 256] = {
         _CTYPE_ ## base ## _255             \
         }
 
-const char __ctype[locale_END - locale_EXTENDED_BASE][_CTYPE_OFFSET + 1 + 256] = {
+const char __ctype[locale_END - locale_EXTENDED_BASE][_CTYPE_OFFSET + 1 + 256] PROGMEM = {
 #ifdef __MB_EXTENDED_CHARSETS_ISO
     __CTYPE(ISO_8859_1),
     __CTYPE(ISO_8859_2),

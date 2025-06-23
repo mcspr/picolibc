@@ -10,7 +10,7 @@ Modified (m) 2017 Thomas Wolff: revise Unicode and locale/wchar handling
 #include <langinfo.h>
 #include "local.h"
 
-static const struct caseconv_entry table [] = {
+static const struct caseconv_entry table [] PROGMEM = {
 #include "caseconv.t"
 };
 #define first(ce)	((wint_t) ce.first)

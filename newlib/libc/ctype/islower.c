@@ -75,6 +75,6 @@ islower (int c)
 #if _PICOLIBC_CTYPE_SMALL
     return 'a' <= c && c <= 'z';
 #else
-    return ((__CTYPE_PTR[c+1] & (__CTYPE_UPPER|__CTYPE_LOWER)) == __CTYPE_LOWER);
+    return ((pgm_read_byte (&__CTYPE_PTR[c+1]) & (__CTYPE_UPPER|__CTYPE_LOWER)) == __CTYPE_LOWER);
 #endif
 }

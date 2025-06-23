@@ -79,6 +79,6 @@ ispunct (int c)
             ('[' <= c && c <= '`') ||
             ('{' <= c && c <= '~'));
 #else
-    return(__CTYPE_PTR[c+1] & __CTYPE_PUNCT);
+    return(pgm_read_byte (&__CTYPE_PTR[c+1]) & __CTYPE_PUNCT);
 #endif
 }

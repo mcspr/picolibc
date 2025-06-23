@@ -14,7 +14,7 @@ isxdigit_l (int c, locale_t locale)
 #if _PICOLIBC_CTYPE_SMALL
     return isxdigit(c);
 #else
-    return __CTYPE_PTR_L (locale)[c+1] & ((__CTYPE_HEX)|(__CTYPE_DIGIT));
+    return pgm_read_byte (&(__CTYPE_PTR_L (locale)[c+1])) & ((__CTYPE_HEX)|(__CTYPE_DIGIT));
 #endif
 }
 

@@ -76,6 +76,6 @@ iscntrl (int c)
 #if _PICOLIBC_CTYPE_SMALL
     return (0x00 <= c && c <= 0x1f) || c == 0x7f;
 #else
-    return(__CTYPE_PTR[c+1] & __CTYPE_CNTRL);
+    return(pgm_read_byte (&__CTYPE_PTR[c+1]) & __CTYPE_CNTRL);
 #endif
 }

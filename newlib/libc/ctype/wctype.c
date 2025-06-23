@@ -77,47 +77,47 @@ wctype (const char *c)
   switch (*c)
     {
     case 'a':
-      if (!strcmp (c, "alnum"))
+      if (!strcmp (c, PSTR("alnum")))
         return WC_ALNUM; 
-      else if (!strcmp (c, "alpha"))
+      else if (!strcmp (c, PSTR("alpha")))
         return WC_ALPHA;
       break;
     case 'b':
-      if (!strcmp (c, "blank"))
+      if (!strcmp (c, PSTR("blank")))
         return WC_BLANK;
       break;
     case 'c':
-      if (!strcmp (c, "cntrl"))
+      if (!strcmp (c, PSTR("cntrl")))
         return WC_CNTRL;
       break;
     case 'd':
-      if (!strcmp (c, "digit"))
+      if (!strcmp (c, PSTR("digit")))
         return WC_DIGIT;
       break;
     case 'g':
-      if (!strcmp (c, "graph"))
+      if (!strcmp (c, PSTR("graph")))
         return WC_GRAPH;
       break;
     case 'l':
-      if (!strcmp (c, "lower"))
+      if (!strcmp (c, PSTR("lower")))
         return WC_LOWER;
       break;
     case 'p':
-      if (!strcmp (c, "print"))
+      if (!strcmp (c, PSTR("print")))
         return WC_PRINT;
-      else if (!strcmp (c, "punct"))
+      else if (!strcmp (c, PSTR("punct")))
         return WC_PUNCT;
       break;
     case 's':
-      if (!strcmp (c, "space"))
+      if (!strcmp (c, PSTR("space")))
         return WC_SPACE;
       break;
     case 'u':
-      if (!strcmp (c, "upper"))
+      if (!strcmp (c, PSTR("upper")))
         return WC_UPPER;
       break;
     case 'x':
-      if (!strcmp (c, "xdigit"))
+      if (!strcmp (c, PSTR("xdigit")))
         return WC_XDIGIT;
       break;
     }
