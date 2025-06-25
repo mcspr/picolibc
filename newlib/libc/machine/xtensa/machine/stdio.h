@@ -3,16 +3,16 @@
 #ifndef _MACHINE_STDIO_H_
 #define _MACHINE_STDIO_H_
 
-#include <stdio.h>
+#include <sys/cdefs.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-int     printf_P(const char *__fmt, ...) __PRINTF_ATTRIBUTE__(1, 2);
-int     sprintf_P(char *__s, const char *__fmt, ...) __PRINTF_ATTRIBUTE__(2, 3);
-int     snprintf_P(char *__s, size_t __n, const char *__fmt, ...) __PRINTF_ATTRIBUTE__(3, 4);
-int     vsnprintf_P(char *__s, size_t __n, const char *__fmt, __gnuc_va_list ap) __PRINTF_ATTRIBUTE__(3, 0);
+int     printf_P(const char *__fmt, ...) __picolibc_format(printf, 1, 2);
+int     sprintf_P(char *__s, const char *__fmt, ...) __picolibc_format(printf, 2, 3);
+int     snprintf_P(char *__s, size_t __n, const char *__fmt, ...) __picolibc_format(printf, 3, 4);
+int     vsnprintf_P(char *__s, size_t __n, const char *__fmt, __gnuc_va_list ap) __picolibc_format(printf, 3, 0);
 
 #ifdef __cplusplus
 }
