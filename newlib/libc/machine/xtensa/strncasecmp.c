@@ -1,10 +1,13 @@
+#define __need_size_t
 #include <stddef.h>
+
 #include <strings.h>
 #include <sys/string.h>
 #include <sys/pgmspace.h>
 
 int
-newlib_strncasecmp(const char *s1, const char *s2, size_t n);
+newlib_strncasecmp(const char *s1, const char *s2, size_t n)
+__attribute__((visibility("hidden")));
 
 #define strncasecmp newlib_strncasecmp
 #include "../../string/strncasecmp.c"

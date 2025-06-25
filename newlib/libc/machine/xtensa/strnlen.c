@@ -1,16 +1,17 @@
 #include <picolibc.h>
 
-#undef __STRICT_ANSI__
-#include <string.h>
-
 #define __need_size_t
 #include <stddef.h>
+
+#undef __STRICT_ANSI__
+#include <string.h>
 
 #include <sys/string.h>
 #include <sys/pgmspace.h>
 
 size_t
-newlib_strnlen(const char *, size_t);
+newlib_strnlen(const char *, size_t)
+__attribute__((visibility("hidden")));
 
 #define strnlen newlib_strnlen
 #include "../../string/strnlen.c"

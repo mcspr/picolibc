@@ -2,7 +2,8 @@
 #undef strcat
 
 char *
-newlib_strncat(char *, const char *__restrict, size_t);
+newlib_strncat(char *, const char *__restrict, size_t)
+__attribute__((visibility("hidden")));
 
 #define strncat newlib_strncat
 #include "../../string/strncat.c"

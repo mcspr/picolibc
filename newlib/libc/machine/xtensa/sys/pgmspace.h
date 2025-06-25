@@ -223,7 +223,6 @@ typedef uint32_t prog_uint32_t;
 
 #endif // defined(__PROG_TYPES_COMPAT__)
 
-
 #ifdef __cplusplus
 }
 #endif

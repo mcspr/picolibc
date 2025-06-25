@@ -1,4 +1,8 @@
+#define __need_size_t
+#include <stddef.h>
+
 #include <string.h>
+
 #include <sys/string.h>
 #include <sys/pgmspace.h>
 

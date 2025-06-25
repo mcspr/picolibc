@@ -2,16 +2,17 @@
 #define __MISC_VISIBLE 1
 #define __USE_MISC 1
 
+#define __need_size_t
+#include <stddef.h>
 #include <string.h>
 
 void *
-newlib_memchr(const void *, int, size_t);
+newlib_memchr(const void *, int, size_t)
+__attribute__((visibility("hidden")));
 
 #define memchr newlib_memchr
 #include "../../string/memchr.c"
 #undef memchr
-
-#include <stddef.h>
 
 #include <sys/string.h>
 #include <sys/pgmspace.h>
