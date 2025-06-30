@@ -64,8 +64,11 @@
 #include "conv_flt.c"
 
 #ifdef WIDE_CHARS
+#define PGM_READ pgm_read_wchar
 #define strtod wcstod
 #define strtold wcstold
+#else
+#define PGM_READ pgm_read_byte
 #endif
 
 double
@@ -75,7 +78,7 @@ strtod (const CHAR * nptr, CHAR ** endptr)
     double flt;
     UCHAR ret;
 
-    while (ISSPACE(pgm_read_byte(nptr + len)))
+    while (ISSPACE(PGM_READ(nptr + len)))
         len++;
 
     ret = conv_flt(nptr, &len, INT_MAX, &flt, FL_LONG);

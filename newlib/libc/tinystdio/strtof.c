@@ -63,7 +63,10 @@
 #include "conv_flt.c"
 
 #ifdef WIDE_CHARS
+#define PGM_READ pgm_read_wchar
 #define strtof wcstof
+#else
+#define PGM_READ pgm_read_byte
 #endif
 
 float
@@ -73,7 +76,7 @@ strtof (const CHAR * nptr, CHAR ** endptr)
     float flt;
     UCHAR ret;
 
-    while (ISSPACE(pgm_read_byte(nptr + len)))
+    while (ISSPACE(PGM_READ(nptr + len)))
         len++;
 
     ret = conv_flt(nptr, &len, INT_MAX, &flt, 0);

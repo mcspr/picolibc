@@ -72,6 +72,7 @@ typedef long int_scanf_t;
 #ifdef WIDE_CHARS
 # define INT wint_t
 # define MY_EOF          WEOF
+# define PGM_READ pgm_read_wchar
 # define CHAR wchar_t
 # if __SIZEOF_WCHAR_T__ == 2
 #  define UCHAR          uint16_t
@@ -93,6 +94,7 @@ typedef long int_scanf_t;
 # define MY_EOF          EOF
 # define IS_EOF(c)       ((c) < 0)
 # define CHAR char
+# define PGM_READ pgm_read_byte
 # define UCHAR unsigned char
 # define GETC(s) getc_unlocked(s)
 # define UNGETC(c,s) ungetc(c,s)
@@ -344,7 +346,7 @@ conv_brk (FILE *stream, scanf_context_t *context, width_t width, void *addr, con
     bool        fany = false;
 
     (void) flags;
-    if (pgm_read_byte (_fmt) == '^') {
+    if (PGM_READ (_fmt) == '^') {
         fnegate = true;
         _fmt++;
     }
@@ -373,7 +375,7 @@ conv_brk (FILE *stream, scanf_context_t *context, width_t width, void *addr, con
              * characters, which makes sense, but appears to violate the
              * spec.
              */
-            f = pgm_read_byte (fmt++);
+            f = PGM_READ (fmt++);
             if (!f)
                 return NULL;
             if (fmt != _fmt + 1) {
@@ -609,13 +611,13 @@ int vfscanf (FILE * stream, const CHAR *fmt, va_list ap_orig)
     /* Initialization of stream_flags at each pass simplifies the register
        allocation with GCC 3.3 - 4.2.  Only the GCC 4.3 is good to move it
        to the begin.	*/
-    while ((c = pgm_read_byte (fmt++)) != 0) {
+    while ((c = PGM_READ (fmt++)) != 0) {
 
 	if (ISSPACE (c)) {
 	    skip_spaces (stream, &context);
 
 	} else if (c != '%'
-		   || (c = pgm_read_byte (fmt++)) == '%')
+		   || (c = PGM_READ (fmt++)) == '%')
 	{
 	    /* Ordinary character.	*/
 	    if (IS_EOF(i = scanf_getc (stream, &context)))
@@ -630,7 +632,7 @@ int vfscanf (FILE * stream, const CHAR *fmt, va_list ap_orig)
 
 	    if (c == '*') {
 		flags = FL_STAR;
-		c = pgm_read_byte (fmt++);
+		c = PGM_READ (fmt++);
 	    }
 
             for (;;) {
@@ -638,7 +640,7 @@ int vfscanf (FILE * stream, const CHAR *fmt, va_list ap_orig)
                 while ((c -= '0') < 10) {
                     flags |= FL_WIDTH;
                     width = width * 10 + c;
-                    c = pgm_read_byte (fmt++);
+                    c = PGM_READ (fmt++);
                 }
                 c += '0';
                 if (flags & FL_WIDTH) {
@@ -648,7 +650,7 @@ int vfscanf (FILE * stream, const CHAR *fmt, va_list ap_orig)
                         va_end(ap);
                         va_copy(ap, ap_orig);
                         skip_to_arg(&my_ap, width);
-                        c = pgm_read_byte (fmt++);
+                        c = PGM_READ (fmt++);
                         continue;
                     }
 #endif
@@ -664,23 +666,23 @@ int vfscanf (FILE * stream, const CHAR *fmt, va_list ap_orig)
 	    switch (c) {
 	      case 'h':
                 flags |= FL_SHORT;
-		c = pgm_read_byte (fmt++);
+		c = PGM_READ (fmt++);
                 if (c == 'h') {
                     flags |= FL_CHAR;
-                    c = pgm_read_byte (fmt++);
+                    c = PGM_READ (fmt++);
                 }
 		break;
 	      case 'l':
 		flags |= FL_LONG;
-		c = pgm_read_byte (fmt++);
+		c = PGM_READ (fmt++);
                 if (c == 'l') {
                     flags |= FL_LONGLONG;
-                    c = pgm_read_byte (fmt++);
+                    c = PGM_READ (fmt++);
                 }
 		break;
               case 'L':
                 flags |= FL_LONG|FL_LONGLONG;
-                c = pgm_read_byte (fmt++);
+                c = PGM_READ (fmt++);
                 break;
 #ifdef _NEED_IO_C99_FORMATS
 #ifdef _NEED_IO_LONG_LONG
@@ -700,7 +702,7 @@ int vfscanf (FILE * stream, const CHAR *fmt, va_list ap_orig)
 			flags |= FL_SHORT;                      \
                     CHECK_LONGLONG(type);                       \
 		}						\
-		c = pgm_read_byte (fmt++);					\
+		c = PGM_READ (fmt++);					\
 		break;
 
 	    CHECK_INT_SIZE('j', intmax_t);

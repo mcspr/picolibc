@@ -64,6 +64,7 @@
 # endif
 
 #ifdef WIDE_CHARS
+# define PGM_READ pgm_read_wchar
 # define CHAR wchar_t
 # if __SIZEOF_WCHAR_T__ == 2
 #  define UCHAR          uint16_t
@@ -71,6 +72,7 @@
 #  define UCHAR          uint32_t
 # endif
 #else
+# define PGM_READ pgm_read_byte
 # define CHAR char
 # define UCHAR unsigned char
 #endif
@@ -348,10 +350,10 @@ skip_to_arg(const CHAR *fmt_orig, my_va_list *ap, int target_argno)
 
     while (current_argno < target_argno) {
         for (;;) {
-            c = pgm_read_byte (fmt++);
+            c = PGM_READ (fmt++);
             if (!c) return;
             if (c == '%') {
-                c = pgm_read_byte (fmt++);
+                c = PGM_READ (fmt++);
                 if (c != '%') break;
             }
         }
@@ -421,7 +423,7 @@ skip_to_arg(const CHAR *fmt_orig, my_va_list *ap, int target_argno)
             CHECK_INT_SIZES(c, flags);
 
 	    break;
-	} while ( (c = pgm_read_byte (fmt++)) != 0);
+	} while ( (c = PGM_READ (fmt++)) != 0);
         if (argno == 0)
             break;
         if (argno == current_argno) {
@@ -572,10 +574,10 @@ int vfprintf (FILE * stream, const CHAR *fmt, va_list ap_orig)
     for (;;) {
 
 	for (;;) {
-	    c = pgm_read_byte (fmt++);
+	    c = PGM_READ (fmt++);
 	    if (!c) goto ret;
 	    if (c == '%') {
-		c = pgm_read_byte (fmt++);
+		c = PGM_READ (fmt++);
 		if (c != '%') break;
 	    }
 	    my_putc (c, stream);
@@ -694,7 +696,7 @@ int vfprintf (FILE * stream, const CHAR *fmt, va_list ap_orig)
             CHECK_INT_SIZES(c, flags);
 
 	    break;
-	} while ( (c = pgm_read_byte (fmt++)) != 0);
+	} while ( (c = PGM_READ (fmt++)) != 0);
 
 #ifdef _NEED_IO_POS_ARGS
         /* Set arg pointers for positional args */
@@ -882,7 +884,7 @@ int vfprintf (FILE * stream, const CHAR *fmt, va_list ap_orig)
 		pnt = PSTR("inf");
 		if (dtoa.flags & DTOA_NAN)
 		    pnt = PSTR("nan");
-		while ( (c = pgm_read_byte (pnt++)) )
+		while ( (c = PGM_READ (pnt++)) )
 		    my_putc (TOCASE(c), stream);
 	    }
             else

@@ -36,6 +36,7 @@
 #ifndef CHAR
 
 #ifdef WIDE_CHARS
+# define PGM_READ       pgm_read_wchar
 # define CHAR           wchar_t
 # define INT            wint_t
 #if __SIZEOF_WCHAR_T__ == 2
@@ -49,6 +50,7 @@
 # define ISSPACE(c)     iswspace(c)
 # define ISALNUM(c)     iswalnum(c)
 #else
+# define PGM_READ       pgm_read_byte
 # define CHAR           char
 # define UCHAR          unsigned char
 # define INT            int
@@ -105,7 +107,7 @@ static const CHAR pstr_an[] PSTR_ATTR = CQ("an");
 static inline INT scanf_getc(const CHAR *s, int *lenp)
 {
     int l = *lenp;
-    INT c = pgm_read_byte (s + l);
+    INT c = PGM_READ (s + l);
     *lenp = l + 1;
     return c;
 }
@@ -271,7 +273,7 @@ conv_flt (FLT_STREAM *stream, FLT_CONTEXT *context, width_t width, void *addr, u
         {
 	    UCHAR c;
 
-	    while ((c = pgm_read_byte (p++)) != 0) {
+	    while ((c = PGM_READ (p++)) != 0) {
 		if (CHECK_WIDTH()) {
                     if (!IS_EOF(i = scanf_getc (stream, context))) {
                         if (TOLOWER(i) == (INT) c)
