@@ -3,6 +3,10 @@
 #ifndef _MACHINE_STDIO_H_
 #define _MACHINE_STDIO_H_
 
+#define __need_size_t
+#include <stddef.h>
+#include <stdarg.h>
+
 #include <sys/cdefs.h>
 
 #ifdef __cplusplus

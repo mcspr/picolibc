@@ -1,4 +1,6 @@
 #include <machine/stdio.h>
+#include <stdio.h>
+#include <stdarg.h>
 
 /* STDIO function wrapper for backwards compatibility */
 
