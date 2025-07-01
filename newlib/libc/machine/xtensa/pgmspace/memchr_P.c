@@ -26,8 +26,6 @@
 #include <stddef.h>
 
 #include <string.h>
-
-#include <sys/string.h>
 #include <sys/pgmspace.h>
 
 void *memchr_P(const void *src_void, int c, size_t length)
@@ -44,4 +42,3 @@ void *memchr_P(const void *src_void, int c, size_t length)
 
     return NULL;
 }
-

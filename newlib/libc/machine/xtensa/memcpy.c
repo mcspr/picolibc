@@ -1,3 +1,6 @@
+#if !_XTENSA_CSTRING_PGMSPACE_
+/* ESP8266 has this in ROM */
+#else
 #define _GNU_SOURCE
 #include <stddef.h>
 
@@ -9,12 +12,6 @@
 
 #include <stdio.h>
 
-void foo(int32_t);
-void foo(int32_t x)
-{
-    printf("%d\n", x);
-}
-
 void *
 memcpy(void *__restrict dest, const void *__restrict src, size_t n)
 {
@@ -24,3 +21,4 @@ memcpy(void *__restrict dest, const void *__restrict src, size_t n)
 
     return __fast_memcpy(dest, src, n);
 }
+#endif

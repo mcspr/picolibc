@@ -38,5 +38,6 @@ strnstr_P(const char *haystack, const char *needle, size_t haystack_len)
     if (x && !memchr_P(haystack, 0, x - haystack))
       return x;
   }
+
   return NULL;
 }

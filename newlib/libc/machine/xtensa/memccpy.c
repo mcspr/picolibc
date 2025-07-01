@@ -1,3 +1,4 @@
+#if _XTENSA_CSTRING_PGMSPACE_
 #define _DEFAULT_SOURCE
 
 #undef __MISC_VISIBLE
@@ -7,16 +8,17 @@
 #define __need_size_t
 #include <stddef.h>
 
-#include <string.h>
-#include <sys/string.h>
-
 void *
 newlib_memccpy (void *__restrict dest, const void *__restrict src, int c, size_t n)
 __attribute__((visibility("hidden")));
 
 #define memccpy newlib_memccpy
+#endif
 #include "../../string/memccpy.c"
+#if _XTENSA_CSTRING_PGMSPACE_
 #undef memccpy
+#include <sys/string.h>
+#include "pgmspace/_pgmspace.h"
 
 void *
 memccpy(void *__restrict dest, const void *__restrict src, int c, size_t n)
@@ -26,3 +28,4 @@ memccpy(void *__restrict dest, const void *__restrict src, int c, size_t n)
 
     return newlib_memccpy(dest, src, c, n);
 }
+#endif

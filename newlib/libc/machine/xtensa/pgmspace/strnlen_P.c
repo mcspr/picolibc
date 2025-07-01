@@ -20,16 +20,17 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+// TODO - Optimize these routines to use 32-bit accesses whenever possible
+
 #define __need_size_t
 #include <stddef.h>
 
 #include <stdint.h>
 
-#include <sys/string.h>
+#include <string.h>
 #include <sys/pgmspace.h>
 
-size_t
-strnlen_P(const char* s, size_t size)
+size_t strnlen_P(const char* s, size_t size)
 {
     const char *cp = s;
     const uint32_t *pmem;

@@ -27,11 +27,10 @@
 
 #include <stdint.h>
 
-#include <sys/string.h>
+#include <string.h>
 #include <sys/pgmspace.h>
 
-int
-memcmp_P(const void* buf1, const void* buf2P, size_t size)
+int memcmp_P(const void* buf1, const void* buf2P, size_t size)
 {
     int result = 0;
     const uint8_t* read1 = (const uint8_t*)buf1;

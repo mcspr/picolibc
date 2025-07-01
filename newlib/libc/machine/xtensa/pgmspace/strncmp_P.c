@@ -25,11 +25,10 @@
 #define __need_size_t
 #include <stddef.h>
 
-#include <sys/string.h>
+#include <string.h>
 #include <sys/pgmspace.h>
 
-int
-strncmp_P(const char* s1, const char* s2, size_t size)
+int strncmp_P(const char* s1, const char* s2, size_t size)
 {
     const unsigned char *p1 = (const unsigned char *)s1;
     const unsigned char *p2 = (const unsigned char *)s2;
@@ -38,8 +37,8 @@ strncmp_P(const char* s1, const char* s2, size_t size)
 
     while (size > 0)
     {
-        int ch1 = *p1++;
-        int ch2 = pgm_read_byte(p2++);
+        const int ch1 = *p1++;
+        const int ch2 = pgm_read_byte(p2++);
         result = ch1 - ch2;
         if (result != 0 || ch2 == '\0')
         {

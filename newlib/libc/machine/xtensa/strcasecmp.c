@@ -1,3 +1,4 @@
+#if _XTENSA_CSTRING_PGMSPACE_
 #include <strings.h>
 #include <sys/string.h>
 
@@ -6,7 +7,9 @@ newlib_strcasecmp(const char *s1, const char *s2)
 __attribute__((visibility("hidden")));
 
 #define strcasecmp newlib_strcasecmp
+#endif
 #include "../../string/strcasecmp.c"
+#if _XTENSA_CSTRING_PGMSPACE_
 #undef strcasecmp
 
 #include <sys/string.h>
@@ -19,3 +22,4 @@ strcasecmp(const char *s1, const char *s2)
 
     return newlib_strcasecmp(s1, s2);
 }
+#endif

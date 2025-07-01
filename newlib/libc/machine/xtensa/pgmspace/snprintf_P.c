@@ -1,14 +1,9 @@
-#define __need_size_t
-#include <stddef.h>
+/* Backwards compatibility, both format and arguments are allowed to be PSTR / PROGMEM */
 
 #include <stdarg.h>
 #include <stdio.h>
 
-#include <machine/stdio.h>
-
-/* STDIO function wrapper for backwards compatibility */
-
-int snprintf_P(char* str, size_t strSize, const char *formatP, ...) {
+int snprintf_P(char* str, size_t strSize, const char* formatP, ...) {
     int ret;
     va_list arglist;
     va_start(arglist, formatP);
@@ -16,4 +11,3 @@ int snprintf_P(char* str, size_t strSize, const char *formatP, ...) {
     va_end(arglist);
     return ret;
 }
-

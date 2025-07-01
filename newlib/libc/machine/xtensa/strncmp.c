@@ -1,3 +1,6 @@
+#if !_XTENSA_CSTRING_PGMSPACE_
+/* ESP8266 has this in ROM */
+#else
 #define __need_size_t
 #include <stddef.h>
 
@@ -15,4 +18,4 @@ strncmp (const char *s1, const char *s2, size_t n)
 
     return rom_strncmp (s1, s2, n);
 }
-
+#endif

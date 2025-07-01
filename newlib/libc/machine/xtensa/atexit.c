@@ -1,10 +1,13 @@
-// per. cores/esp8266/libc_replacements.cpp, atexit does nothing (not even exits)
+/* atexit.c, but very weak */
 
 #include <stdlib.h>
 
-int __attribute__((weak))
-atexit(void (*__func)(void))
+int
+atexit (void (*func)()) __attribute__((weak));
+
+int
+atexit (void (*func)())
 {
-  (void) __func;
-  return 1;
+  (void)func;
+  return 0;
 }

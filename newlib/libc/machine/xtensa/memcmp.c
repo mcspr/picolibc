@@ -1,3 +1,6 @@
+#if !_XTENSA_CSTRING_PGMSPACE_
+/* ESP8266 has this in ROM */
+#else
 #define __need_size_t
 #include <stddef.h>
 
@@ -14,3 +17,4 @@ memcmp(const void *s1, const void *s2, size_t n)
 
     return rom_memcmp(s1, s2, n);
 }
+#endif

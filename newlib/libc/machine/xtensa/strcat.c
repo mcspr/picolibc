@@ -1,3 +1,4 @@
+#if _XTENSA_CSTRING_PGMSPACE_
 #include <string.h>
 #undef strcat
 
@@ -6,7 +7,9 @@ newlib_strcat(char *__restrict, const char *__restrict)
 __attribute__((visibility("hidden")));
 
 #define strcat newlib_strcat
+#endif
 #include "../../string/strcat.c"
+#if _XTENSA_CSTRING_PGMSPACE_
 #undef strcat
 
 #include <sys/string.h>
@@ -20,3 +23,4 @@ strcat(char *__restrict dest, const char *__restrict src)
 
     return newlib_strcat(dest, src);
 }
+#endif

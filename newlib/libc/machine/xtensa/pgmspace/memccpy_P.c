@@ -26,13 +26,11 @@
 #include <stddef.h>
 
 #include <stdint.h>
-#include <string.h>
 
-#include <sys/string.h>
+#include <string.h>
 #include <sys/pgmspace.h>
 
-void *
-memccpy_P(void* dest, const void* src, int c, size_t count)
+void* memccpy_P(void* dest, const void* src, int c, size_t count)
 {
     uint8_t* read = (uint8_t*)src;
     uint8_t* write = (uint8_t*)dest;

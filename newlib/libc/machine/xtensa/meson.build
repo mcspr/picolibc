@@ -36,9 +36,10 @@
 srcs_machine = [
   'atexit.c',
   'bzero.S',
-  'fast_strlen.S',
   'fast_memcpy.S',
+  'fast_memset.S',
   'fast_strcpy.S',
+  'fast_strlen.S',
   'fast_strncpy.S',
   'mempcpy.c',
   'memccpy.c',

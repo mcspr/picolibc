@@ -28,11 +28,10 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include <sys/string.h>
+#include <string.h>
 #include <sys/pgmspace.h>
 
-char *
-strncpy_P(char* __restrict dest, const char* __restrict src, size_t size)
+char* strncpy_P(char* __restrict dest, const char* __restrict src, size_t size)
 {
     bool size_known = (size != SIZE_IRRELEVANT);
     const char* read = src;

@@ -25,11 +25,10 @@
 #define __need_size_t
 #include <stddef.h>
 
-#include <sys/string.h>
+#include <string.h>
 #include <sys/pgmspace.h>
 
-char*
-strncat_P(char* __restrict dest, const char* __restrict src, size_t size)
+char* strncat_P(char* __restrict dest, const char* __restrict src, size_t size)
 {
     char* write = dest;
 

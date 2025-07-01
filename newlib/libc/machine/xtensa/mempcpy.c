@@ -1,3 +1,6 @@
+#if !_XTENSA_CSTRING_PGMSPACE_
+#include "../../string/mempcpy.c"
+#else
 #define _GNU_SOURCE
 #include <stddef.h>
 
@@ -16,3 +19,4 @@ mempcpy(void *__restrict dest, const void *__restrict src, size_t n)
 
     return (unsigned char *)__fast_memcpy(dest, src, n) + n;
 }
+#endif

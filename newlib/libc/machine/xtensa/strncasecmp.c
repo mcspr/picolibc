@@ -1,3 +1,4 @@
+#if _XTENSA_CSTRING_PGMSPACE_
 #define __need_size_t
 #include <stddef.h>
 
@@ -10,7 +11,9 @@ newlib_strncasecmp(const char *s1, const char *s2, size_t n)
 __attribute__((visibility("hidden")));
 
 #define strncasecmp newlib_strncasecmp
+#endif
 #include "../../string/strncasecmp.c"
+#if _XTENSA_CSTRING_PGMSPACE_
 #undef strncasecmp
 
 int
@@ -21,4 +24,4 @@ strncasecmp(const char *s1, const char *s2, size_t n)
 
     return newlib_strncasecmp(s1, s2, n);
 }
-
+#endif

@@ -27,11 +27,10 @@
 
 #include <stdint.h>
 
-#include <sys/string.h>
+#include <string.h>
 #include <sys/pgmspace.h>
 
-void*
-memmem_P(const void* buf, size_t bufSize, const void* findP, size_t findPSize)
+void* memmem_P(const void* buf, size_t bufSize, const void* findP, size_t findPSize)
 {
     const uint8_t* read = (const uint8_t*)buf;
     const uint8_t* find = (uint8_t*)findP;

@@ -26,12 +26,10 @@
 #include <stddef.h>
 
 #include <ctype.h>
-
-#include <sys/string.h>
+#include <string.h>
 #include <sys/pgmspace.h>
 
-int
-strncasecmp_P(const char* s1, const char* s2, size_t size)
+int strncasecmp_P(const char* s1, const char* s2, size_t size)
 {
     const unsigned char *p1 = (const unsigned char *)s1;
     const unsigned char *p2 = (const unsigned char *)s2;

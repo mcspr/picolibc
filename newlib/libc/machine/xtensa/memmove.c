@@ -1,3 +1,6 @@
+#if !_XTENSA_CSTRING_PGMSPACE_
+/* ESP8266 has this in ROM */
+#else
 #define __need_size_t
 #include <stddef.h>
 
@@ -16,3 +19,4 @@ memmove(void *dest, const void *src, size_t n)
 
     return rom_memmove(dest, src, n);
 }
+#endif

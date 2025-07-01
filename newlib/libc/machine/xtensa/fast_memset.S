@@ -48,7 +48,7 @@
 	.begin schedule
 	.align	XCHAL_INST_FETCH_WIDTH
 	.literal_position
-__memset_aux:
+__fast_memset_aux:
 
 	/* Skip bytes to get proper alignment for three-byte loop */
 .skip XCHAL_INST_FETCH_WIDTH - 3
@@ -109,9 +109,9 @@ __memset_aux:
 
 
 	.align	4
-	.global	memset
-	.type	memset, @function
-memset:
+	.global	__fast_memset
+	.type	__fast_memset, @function
+__fast_memset:
 	leaf_entry sp, 16
 	/* a2 = dst, a3 = c, a4 = length */
 
@@ -192,4 +192,4 @@ memset:
 
 	.end schedule
 
-	.size	memset, . - memset
+	.size	__fast_memset, . - __fast_memset
